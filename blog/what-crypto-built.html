@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What Has Crypto Actually Built? — Aiden Chen</title>
+  <meta name="theme-color" content="#08070A" />
+
+  <meta property="og:title" content="What Has Crypto Actually Built?" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aidenchen-njc.github.io/blog/what-crypto-built.html" />
+  <meta property="article:published_time" content="2026-05-02" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><rect width=%2216%22 height=%2216%22 fill=%22%2308070A%22/><text x=%228%22 y=%2212%22 font-family=%22serif%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%239B3F4A%22>A</text></svg>" />
+</head>
+
+<body>
+  <div class="preload" id="preload"><span class="preload__dot"></span></div>
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="progress"></div>
+
+  <main class="relative z-10">
+    <article class="mx-auto max-w-2xl px-6 pt-24 pb-32">
+
+      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+        <span>←</span> back home
+      </a>
+
+      <header class="mt-16 mb-12">
+        <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
+          <span>2026.05</span>
+          <span class="text-white/25 mx-2">·</span>
+          <span>6 min</span>
+        </p>
+        <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
+          What Has Crypto Actually Built?
+        </h1>
+        <p class="mt-6 text-white/65 text-lg leading-relaxed">
+          Pure DeFi failed to go mainstream &mdash; and that failure is what let crypto build something more useful. A field map of the vertical integration quietly forming between permissioned chains, public DeFi, and the agent-payment rails coming next.
+        </p>
+      </header>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <div class="prose-essay">
+        <!-- BODY START -->
+
+        <p>Blockchain set out to disrupt incumbent finance. Pure DeFi never became a mainstream financial service, and the reasons have been clear for a while: private key management, gas fees, overcollateralization. The friction filtered out everyone except the believers and the pros willing to live with it.</p>
+
+        <p>The question worth asking isn't whether DeFi &ldquo;won.&rdquo; It's this: given that pure DeFi can't go mainstream, what has the market actually built? Where do those rails go next? And where does value finally accrue?</p>
+
+        <p class="text-white/55"><em>(In short &mdash; what useful thing has crypto actually built these past few years, and where is it headed?)</em></p>
+
+        <h2>The State of Play: A Stratified Market Going Vertical</h2>
+
+        <p>The market self-organized into two parallel tracks. The boundary is now blurring, because the two layers' strengths are complementary &mdash; and that's pulling them toward integration.</p>
+
+        <p><strong>1. The regulated, permissioned layer</strong> &mdash; BlackRock BUIDL, Franklin Templeton FOBXX, JPMorgan Kinexys.</p>
+
+        <p>These products run on identity-verified, semi-permissioned chains, built for institutional clients, with full compliance trails on every transaction.</p>
+
+        <ul>
+          <li>JPMorgan Kinexys has cleared over $1.5T in cumulative volume since launch in 2019, with daily volume now exceeding $2B. The same month, JPMorgan launched MONY (My OnChain Net Yield Fund), its first tokenized money market fund on public Ethereum, pairing with the JPMD deposit token to form a dual-track public-chain footprint.</li>
+          <li>BlackRock BUIDL, since launching in March 2024, has roughly $2B AUM (Jan 2026), about a 20% share of the total tokenized US Treasury market, and has paid out over $100M in cumulative dividends.</li>
+        </ul>
+
+        <p><strong>2. The permissionless public-chain layer</strong> &mdash; Aave, Uniswap, Lido and others continue to settle tens of billions in assets without any institutional backing. DeFi total value locked (TVL) currently sits at around $92.25B (DefiLlama, Feb 25 2026). This layer doesn't serve retail directly &mdash; but it's becoming the back-end settlement and liquidity source for institutional balance sheets.</p>
+
+        <h2>The Bridge: RWAs Become DeFi's Risk-Free Collateral</h2>
+
+        <p>Regulated RWA assets are increasingly accepted across DeFi protocols. In 2025, BlackRock BUIDL was successively accepted as derivatives collateral by Deribit, Crypto.com (June), and Binance (November), and became the primary reserve asset for Ethena's new stablecoin USDtb (over 90%). Tokenization gives traditional financial assets deep on-chain liquidity; DeFi's composability, in return, gives those assets greater capital efficiency. That mutual reinforcement is why the market is no longer two camps &mdash; it's a vertically integrating supply chain.</p>
+
+        <h2>RWA Tokenization Is More Complex Than It Looks</h2>
+
+        <p>Total on-chain RWA value sits above $25B, of which tokenized US Treasuries make up roughly $10B. Tokenized private credit is growing fast and has become the major high-yield category. The reason is direct: in 2025, US short-duration Treasury yields are around 4&ndash;5%, while private credit yields hit 8&ndash;12%.</p>
+
+        <p>There's a &ldquo;Russian doll&rdquo; effect here worth noting. Ethena issues USDtb, whose reserves are mostly BlackRock BUIDL &mdash; and BUIDL's underlying is US Treasuries. The structure creates demand at three layers simultaneously: DeFi stablecoin demand, tokenized RWA demand, and underlying Treasury demand. This kind of nested capital efficiency is unique to public chains; traditional financial infrastructure can barely replicate it.</p>
+
+        <p>But the risk rides alongside. Under stress, contagion through nested structures travels faster than traditional finance's tiered settlement.</p>
+
+        <blockquote>Efficiency amplification and concentration risk are forever two sides of the same coin.</blockquote>
+
+        <h2>One Likely Disruption: Payment Rails for AI Agents</h2>
+
+        <p>Institutional infrastructure is maturing &mdash; and that's exactly what gives AI agents their best entry point.</p>
+
+        <p>The x402 protocol is the most representative AI-native payment implementation today. Built on the HTTP 402 status code, it lets AI agents make on-chain micropayments directly to API services (USDC by default), bypassing traditional subscriptions and T+2 clearing. Settlement times depend on the underlying chain &mdash; about 2 seconds on Base, around 400ms on Solana. Coinbase first published the protocol in May 2025; by September, Cloudflare and Coinbase announced plans to co-found the x402 Foundation, and Cloudflare has integrated it into its Agents SDK and MCP Servers, supporting use cases like pay-per-crawl. As of December 2025, x402 has processed 75M transactions totaling over $24M.</p>
+
+        <p>When AI agents become the primary user, DeFi protocols will fully shed the &ldquo;human operator&rdquo; design assumption. Intent-based protocols led by UniswapX and CoW Protocol are already penetrating DEX market share rapidly; AI-driven automated trading should accelerate the trend further.</p>
+
+        <h2>Where Does Value Ultimately Accrue?</h2>
+
+        <p>Mapped from &ldquo;fully priced&rdquo; to &ldquo;not yet priced,&rdquo; the size of the opportunity runs in reverse.</p>
+
+        <ul>
+          <li><strong>Protocol layer</strong> (Uniswap, Aave, etc.): fee revenue has clear ceilings.</li>
+          <li><strong>Issuance layer</strong> (Circle, etc.): a real spread advantage, but the moat is fragile under regulatory competition.</li>
+          <li><strong>Middle layer</strong> (Fireblocks, Coinbase Prime, etc.): embedded switching costs form the moat.</li>
+          <li><strong>Agent payment infrastructure</strong> (x402 ecosystem): the least priced today, the most worth tracking.</li>
+        </ul>
+
+        <p>Value will keep tilting toward middleware and agent-payment rails &mdash; especially the still-underpriced x402 ecosystem. That's where the real moat of the public-chain era sits. JPMorgan deploying JPMD on Coinbase's Base says it plainly: as the world's largest bank steps onto a public chain, it actually strengthens the pricing power of the infrastructure providers underneath. There's no clear winner in the x402 ecosystem yet &mdash; Cloudflare's angle, turning bot traffic from a &ldquo;security problem&rdquo; into a &ldquo;pricing opportunity,&rdquo; is one of the more interesting business model hypotheses to track.</p>
+
+        <h2>Conclusion</h2>
+
+        <p>Public chains aren't replacing traditional finance. They're becoming its most foundational, most open, most composable settlement layer. Pure DeFi's exit isn't a failure &mdash; it's a necessary first stage. It's what let the market build something more mature and more vertically integrated.</p>
+
+        <!-- BODY END -->
+      </div>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <footer class="flex items-center justify-between flex-wrap gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors">← back home</a>
+        <p class="mono text-[10px] uppercase tracking-[0.3em] text-white/35">© 2026 aiden chen</p>
+      </footer>
+
+    </article>
+  </main>
+
+  <script src="/js/minigl.js"></script>
+  <script src="/js/site.js"></script>
+</body>
+</html>
