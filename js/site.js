@@ -81,7 +81,7 @@
   const HERO_Z_MAX = 1320;
 
   function updateHeroZoom() {
-    if (!heroZoom || !heroStage || reduced || isMobile) return;
+    if (!heroZoom || !heroStage || reduced) return;
     const r = heroZoom.getBoundingClientRect();
     const runway = r.height - window.innerHeight;
     const p = runway > 0 ? Math.max(0, Math.min(1, -r.top / runway)) : 0;

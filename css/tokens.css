@@ -412,11 +412,8 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   .proj-track { flex-direction: column; padding: 0 1.5rem; gap: 1rem; transform: none !important; }
   .proj-card { width: 100%; height: auto; min-height: 0; }
   .proj-progress { position: static; transform: none; margin: 2rem auto 0; justify-content: center; }
-  .hero-zoom { height: 100vh; }
-  .hero-pin { perspective: none; }
-  .hero-stage { transform: none !important; filter: none !important; opacity: 1 !important; }
-  .hero-svg-text { font-size: 110px; }
-  .hero-vignette { display: none; }
+  /* Hero zoom kept on mobile — same dolly effect as desktop, scaled by SVG viewBox. */
+  .hero-zoom { height: 200vh; }
 }
 
 /* === Prose (essay body) — newsletter aesthetic === */
