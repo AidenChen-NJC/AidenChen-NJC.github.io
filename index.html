@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aiden Chen</title>
+  <meta name="theme-color" content="#08070A" />
+
+  <meta property="og:title" content="Aiden Chen" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aidenchen-njc.github.io" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><rect width=%2216%22 height=%2216%22 fill=%22%2308070A%22/><text x=%228%22 y=%2212%22 font-family=%22serif%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%239B3F4A%22>A</text></svg>" />
+</head>
+
+<body>
+  <div class="preload" id="preload"><span class="preload__dot"></span></div>
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="progress"></div>
+
+  <main class="relative z-10">
+    <!-- =================== HERO — SVG text + perspective dolly =================== -->
+    <section class="hero-zoom" aria-label="hero">
+      <div class="hero-pin">
+        <h1 class="sr-only">Observing, shipping, and thinking.</h1>
+
+        <div class="hero-stage" aria-hidden="true">
+          <svg class="hero-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="hero-chroma" x="-5%" y="-5%" width="110%" height="110%">
+                <feOffset in="SourceGraphic" dx="0" dy="0" result="rsrc"/>
+                <feOffset in="SourceGraphic" dx="0" dy="0" result="bsrc"/>
+                <feColorMatrix in="rsrc" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rOnly"/>
+                <feColorMatrix in="bsrc" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bOnly"/>
+                <feBlend in="rOnly" in2="bOnly" mode="screen" result="rb"/>
+                <feBlend in="rb" in2="SourceGraphic" mode="normal"/>
+              </filter>
+            </defs>
+            <g class="hero-svg-g">
+              <text class="hero-svg-text" x="800" y="330" text-anchor="middle">Observing,</text>
+              <text class="hero-svg-text hero-svg-italic" x="800" y="510" text-anchor="middle">shipping,</text>
+              <text class="hero-svg-text" x="800" y="690" text-anchor="middle">and thinking.</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="hero-vignette" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- =================== POST-HERO ANCHOR — newsletter aesthetic intro =================== -->
+    <section id="intro" class="post-zoom relative px-6 pt-32 pb-24 md:pl-28">
+      <div class="reveal max-w-3xl mx-auto">
+        <h2 class="serif text-4xl md:text-6xl leading-[1.05]">
+          I build tools that <span class="serif-i text-white/85">respect your attention</span>.
+        </h2>
+        <p class="mt-7 text-white/65 text-lg leading-relaxed">
+          All vibe coded. Check it out and love to hear your feedbacks.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================== PROJECTS — horizontal pin-scroll, Apple-style =================== -->
+    <section id="projects" class="proj-pin" aria-label="projects">
+      <div class="proj-pin-inner">
+        <div class="proj-track">
+
+          <article class="proj-card">
+            <div class="proj-card-media">
+              <img src="/assets/projects/daily-briefing.png" alt="Daily Briefing — your daily dose of news" loading="lazy" />
+            </div>
+            <div class="proj-card-cta">
+              <a href="#" class="liquid-btn liquid-btn-primary">Read more</a>
+              <a href="#" class="liquid-btn">GitHub</a>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <div class="proj-card-media">
+              <img src="/assets/projects/proper-ai.png" alt="Proper AI — Grammarly for prompts" loading="lazy" />
+            </div>
+            <div class="proj-card-cta">
+              <a href="#" class="liquid-btn liquid-btn-primary">Read more</a>
+              <a href="#" class="liquid-btn">Demo</a>
+            </div>
+          </article>
+
+        </div>
+
+        <footer class="proj-progress mono text-[10px] uppercase tracking-[0.4em] text-white/40">
+          <span class="proj-progress-num">01</span> <span class="text-white/20">/</span> 02
+          <span class="proj-progress-track"><span class="proj-progress-bar"></span></span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- =================== WRITING — Aceternity dim-siblings =================== -->
+    <section id="writing" class="mx-auto max-w-4xl px-6 md:px-8 pt-32 pb-24 md:pl-28">
+      <div class="reveal mb-8 px-1">
+        <h2 class="serif text-4xl md:text-5xl">Sometimes I write what I <span class="serif-i" style="color: var(--burgundy-soft);">learn</span>.</h2>
+      </div>
+
+      <div class="reveal dim-list">
+        <a href="#" class="dim-row block py-6 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
+          <div class="flex items-baseline justify-between gap-6">
+            <div class="flex-1 min-w-0">
+              <h3 class="serif text-2xl md:text-3xl">Why I stopped writing prompts and started writing protocols.</h3>
+              <p class="mt-2 text-white/55 line-clamp-1">A prompt is a wish. A protocol is a contract. After 200+ Claude Code sessions, the difference is everything.</p>
+            </div>
+            <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.04</span>
+          </div>
+        </a>
+        <div class="border-t border-white/[0.06] mx-3"></div>
+        <a href="#" class="dim-row block py-6 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
+          <div class="flex items-baseline justify-between gap-6">
+            <div class="flex-1 min-w-0">
+              <h3 class="serif text-2xl md:text-3xl">Five months of solo-operator AI tooling — what stuck.</h3>
+              <p class="mt-2 text-white/55 line-clamp-1">12 experiments. 5 survived. Post-mortem on the 7 that didn't, patterns across the 5 that did.</p>
+            </div>
+            <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.03</span>
+          </div>
+        </a>
+        <div class="border-t border-white/[0.06] mx-3"></div>
+        <a href="#" class="dim-row block py-6 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
+          <div class="flex items-baseline justify-between gap-6">
+            <div class="flex-1 min-w-0">
+              <h3 class="serif text-2xl md:text-3xl">Hooks beat memory: enforcing rules across long Claude sessions.</h3>
+              <p class="mt-2 text-white/55 line-clamp-1">CLAUDE.md decays. Hooks don't. A field report from rebuilding my workflow around the Stop hook.</p>
+            </div>
+            <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.02</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- =================== Footer =================== -->
+    <footer class="mx-auto max-w-4xl px-6 pb-16 md:pl-28">
+      <div class="reveal flex items-center justify-between flex-wrap gap-4 pt-10 border-t border-white/[0.06]">
+        <p class="mono text-[10px] uppercase tracking-[0.3em] text-white/35">© 2026 aiden chen</p>
+        <div class="flex items-center gap-5 text-[11px] mono uppercase tracking-wider text-white/55">
+          <a href="https://github.com/AidenChen-NJC" class="hover:text-white transition-colors">github</a>
+          <a href="mailto:nairuichen0720@gmail.com" class="hover:text-white transition-colors">email</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/js/minigl.js"></script>
+  <script src="/js/site.js"></script>
+</body>
+</html>
