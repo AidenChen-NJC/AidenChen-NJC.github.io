@@ -2,7 +2,6 @@
  * Project Hub — V1 site logic
  * Single-concern handlers, no overlapping transforms per element.
  *  - Preloader (fonts + window load gate)
- *  - WebGL gradient init + IntersectionObserver pause
  *  - Reveal-on-scroll
  *  - Top scroll progress bar
  *  - Hero scroll-zoom (Apple camera-through-letters)
@@ -24,32 +23,11 @@
       document.body.classList.add('ready');
       const pl = document.getElementById('preload');
       if (pl) { pl.classList.add('gone'); setTimeout(() => pl.remove(), 700); }
-      if (window.__bg && !reduced) window.__bg.play();
     });
   })();
 
-  /* === WebGL gradient === */
-  const canvas = document.getElementById('bg-canvas');
-  if (canvas && window.MiniGL && !reduced) {
-    window.__bg = new MiniGL(canvas, {
-      colors: ['#08070A', '#0E0B12', '#5C1A1B', '#08070A'],
-      speed: 0.5
-    });
-    if (window.__bg.unsupported) {
-      canvas.style.display = 'none';
-      const fb = document.createElement('div'); fb.className = 'bg-fallback';
-      document.body.prepend(fb);
-    } else {
-      const visIO = new IntersectionObserver(entries => {
-        entries.forEach(e => { e.isIntersecting ? window.__bg.play() : window.__bg.pause(); });
-      });
-      visIO.observe(canvas);
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) window.__bg.pause();
-        else if (document.body.classList.contains('ready')) window.__bg.play();
-      });
-    }
-  }
+  /* Background shader: see js/shader-bg.js (Paper Shaders MeshGradient).
+   * It self-mounts to #bg-shader and self-pauses when tab is hidden. */
 
   /* === Reveal on scroll === */
   const revealIO = new IntersectionObserver(entries => {

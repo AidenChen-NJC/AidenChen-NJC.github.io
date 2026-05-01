@@ -179,15 +179,21 @@ img, svg { display: block; max-width: 100%; }
   transition: transform 80ms linear;
 }
 
-/* === WebGL canvas backdrop === */
-#bg-canvas {
+/* === Shader backdrop (Paper Shaders MeshGradient mount target) === */
+#bg-shader {
   position: fixed;
   inset: 0;
   z-index: 0;
   width: 100vw;
   height: 100vh;
   pointer-events: none;
+  /* ShaderMount injects a <canvas> child sized to fill this div.
+     pointer-events isn't inherited, so re-assert on all descendants
+     to keep the shader from intercepting scroll/pointer events. */
 }
+#bg-shader, #bg-shader * { pointer-events: none; }
+#bg-shader { overflow: hidden; }
+#bg-shader canvas { display: block; width: 100% !important; height: 100% !important; }
 .bg-fallback {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background:
@@ -525,7 +531,8 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .reveal, .stagger > span, .tilt, .live-dot { transition: none !important; transform: none !important; animation: none !important; }
   .progress { transition: none !important; }
-  #bg-canvas { display: none; }
+  /* Shader auto-pauses (speed=0) under reduced-motion; canvas still visible
+     but renders only one static frame, no RAF cost. .bg-fallback as belt+suspenders. */
   .bg-fallback { display: block; }
   .hero-zoom { height: 100vh; }
   .hero-pin { position: static; height: 100vh; perspective: none; padding: 8rem 6vw; display: flex; align-items: center; justify-content: center; }

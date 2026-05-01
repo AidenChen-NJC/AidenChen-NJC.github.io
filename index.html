@@ -24,7 +24,7 @@
 <body>
   <div class="preload" id="preload"><span class="preload__dot"></span></div>
 
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div id="bg-shader" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <div class="progress"></div>
@@ -166,7 +166,7 @@
     </footer>
   </main>
 
-  <script src="/js/minigl.js"></script>
+  <script type="module" src="/js/shader-bg.js"></script>
   <script src="/js/site.js"></script>
 </body>
 </html>
