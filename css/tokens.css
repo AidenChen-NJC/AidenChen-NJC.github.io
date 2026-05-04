@@ -1,31 +1,140 @@
 /*
  * Project Hub — V1 design tokens
  * Locked 2026-05-01. See docs/v1-design-system.md for spec.
+ * Light theme added 2026-05-04 — Foundation #F0EBE3 (vintage book paper).
  */
 
 :root {
-  /* Foundation */
+  /* === Foundation === */
   --bg-0:        #08070A;
   --ink:         #ECECF1;
   --ink-soft:    #B8BAC4;
   --ink-mute:    #6E7180;
 
-  /* Burgundy — the only accent */
-  --burgundy:      #722F37;
-  --burgundy-soft: #9B3F4A;
-  --burgundy-deep: #5C1A1B;
+  /* === Burgundy — the only accent (unchanged across themes) === */
+  --burgundy:        #722F37;
+  --burgundy-soft:   #9B3F4A;
+  --burgundy-deep:   #5C1A1B;
+  --burgundy-link-h: #C46A75;
 
-  /* Glass surface (Linear pattern) */
+  /* === Glass surface (Linear pattern) === */
   --glass-bg:     rgba(10,10,12,0.6);
   --glass-inset:  rgba(255,255,255,0.06);
   --glass-shadow: 0 8px 32px rgba(0,0,0,0.4);
 
-  /* Solid card */
-  --card-grad:   linear-gradient(180deg, rgba(28,22,32,0.78), rgba(18,15,22,0.78));
-  --card-border: rgba(255,255,255,0.10);
+  /* === Card-solid === */
+  --card-grad:        linear-gradient(180deg, rgba(28,22,32,0.78), rgba(18,15,22,0.78));
+  --card-border:      rgba(255,255,255,0.10);
+  --card-media-bg:    linear-gradient(135deg, rgba(28,22,32,0.7), rgba(14,12,18,0.7));
+  --card-media-edge:  rgba(255,255,255,0.08);
+
+  /* === Liquid glass button === */
+  --lbtn-bg:           rgba(255,255,255,0.05);
+  --lbtn-bg-hover:     rgba(255,255,255,0.10);
+  --lbtn-border:       rgba(255,255,255,0.18);
+  --lbtn-inset:        rgba(255,255,255,0.06);
+  --lbtn-inset-hover:  rgba(255,255,255,0.10);
+  --lbtn-top:          rgba(255,255,255,0.30);
+  --lbtn-top-hover:    rgba(255,255,255,0.40);
+  --lbtn-shadow:       0 8px 24px -8px rgba(0,0,0,0.6);
+  --lbtn-shadow-hover: 0 12px 32px -8px rgba(0,0,0,0.7);
+
+  /* === Hero vignette tunnel === */
+  --vignette-color:  rgba(8,7,10,0.85);
+  --vignette-glow:   rgba(155,63,74,0.10);
+
+  /* === Project pin progress track === */
+  --proj-track-bg:   rgba(255,255,255,0.12);
+
+  /* === Background fallback === */
+  --bg-fallback-a: rgba(40,30,55,0.45);
+  --bg-fallback-b: rgba(92,26,27,0.25);
+
+  /* === Grain overlay === */
+  --grain-opacity: 0.05;
+  --grain-blend:   overlay;
+
+  /* === Prose (essay body) === */
+  --prose-fg:         rgba(236,236,241,0.78);
+  --prose-quote:      rgba(236,236,241,0.85);
+  --prose-code-bg:    rgba(255,255,255,0.06);
+  --prose-pre-bg:     rgba(255,255,255,0.04);
+  --prose-pre-edge:   rgba(255,255,255,0.08);
+  --prose-pre-fg:     rgba(236,236,241,0.88);
+  --prose-hr:         rgba(255,255,255,0.08);
+  --prose-figcaption: rgba(255,255,255,0.4);
+
+  /* === Dim-list hover === */
+  --dim-hover-bg:    rgba(255,255,255,0.03);
+
+  /* === Theme transition === */
+  --theme-tx: background-color 320ms ease, color 320ms ease, border-color 320ms ease, box-shadow 320ms ease, fill 320ms ease;
 }
 
-/* === Base reset === */
+/* ======================================================================
+ * Light theme — Foundation #F0EBE3, burgundy unchanged, warm hairline edge,
+ * neutral lighter shadow (NOT warm-tinted), shader hidden.
+ * ====================================================================== */
+[data-theme="light"] {
+  --bg-0:        #F0EBE3;
+  --ink:         #1A1517;
+  --ink-soft:    #5A4E54;
+  --ink-mute:    #8C8088;
+
+  /* Burgundy unchanged */
+
+  /* Glass — warm hairline + neutral lighter shadow */
+  --glass-bg:     rgba(255,253,248,0.55);
+  --glass-inset:  rgba(40,20,25,0.10);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12);
+
+  /* Card-solid — cream gradient, warm hairline */
+  --card-grad:        linear-gradient(180deg, rgba(255,253,248,0.92), rgba(245,240,232,0.92));
+  --card-border:      rgba(40,20,25,0.10);
+  --card-media-bg:    linear-gradient(135deg, rgba(245,240,232,0.85), rgba(232,220,210,0.85));
+  --card-media-edge:  rgba(40,20,25,0.10);
+
+  /* Liquid button — invert white insets to subtle warm darks; keep white top highlight for liquid feel */
+  --lbtn-bg:           rgba(40,20,25,0.04);
+  --lbtn-bg-hover:     rgba(40,20,25,0.08);
+  --lbtn-border:       rgba(40,20,25,0.14);
+  --lbtn-inset:        rgba(40,20,25,0.06);
+  --lbtn-inset-hover:  rgba(40,20,25,0.10);
+  --lbtn-top:          rgba(255,255,255,0.85);
+  --lbtn-top-hover:    rgba(255,255,255,1);
+  --lbtn-shadow:       0 8px 24px -8px rgba(0,0,0,0.18);
+  --lbtn-shadow-hover: 0 12px 32px -8px rgba(0,0,0,0.22);
+
+  /* Vignette — cream tunnel collapsing to bg-0 */
+  --vignette-color:  rgba(240,235,227,0.92);
+  --vignette-glow:   rgba(155,63,74,0.06);
+
+  /* Project track */
+  --proj-track-bg:   rgba(40,20,25,0.12);
+
+  /* BG fallback — flat cream, no purple radial */
+  --bg-fallback-a:   transparent;
+  --bg-fallback-b:   rgba(155,63,74,0.04);
+
+  /* Grain a touch stronger to remain visible on cream */
+  --grain-opacity:   0.07;
+
+  /* Prose — invert ink at same alpha levels */
+  --prose-fg:         rgba(26,21,23,0.78);
+  --prose-quote:      rgba(26,21,23,0.88);
+  --prose-code-bg:    rgba(40,20,25,0.06);
+  --prose-pre-bg:     rgba(40,20,25,0.04);
+  --prose-pre-edge:   rgba(40,20,25,0.10);
+  --prose-pre-fg:     rgba(26,21,23,0.88);
+  --prose-hr:         rgba(40,20,25,0.10);
+  --prose-figcaption: rgba(26,21,23,0.4);
+
+  --dim-hover-bg:    rgba(40,20,25,0.04);
+}
+
+/* ======================================================================
+ * Base reset
+ * ====================================================================== */
 * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 html {
@@ -33,8 +142,13 @@ html {
   color: var(--ink);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   letter-spacing: -0.011em;
+  transition: var(--theme-tx);
 }
-body { min-height: 100vh; overflow-x: hidden; }
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: var(--theme-tx);
+}
 a { color: inherit; text-decoration: none; }
 img, svg { display: block; max-width: 100%; }
 
@@ -42,22 +156,26 @@ img, svg { display: block; max-width: 100%; }
 .serif-i { font-family: 'Instrument Serif', serif; font-style: italic; }
 .mono    { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-/* === Glass primitives === */
+/* ======================================================================
+ * Glass primitives
+ * ====================================================================== */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: inset 0 0 0 1px var(--glass-inset), var(--glass-shadow);
   contain: paint;
+  transition: var(--theme-tx);
 }
 
 .glass-soft {
-  background: rgba(255,255,255,0.04);
+  background: var(--lbtn-bg);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--card-media-edge);
   box-shadow: inset 0 0 0 1px var(--glass-inset);
   contain: paint;
+  transition: var(--theme-tx);
 }
 
 .card-solid {
@@ -65,9 +183,12 @@ img, svg { display: block; max-width: 100%; }
   border: 1px solid var(--card-border);
   box-shadow: inset 0 0 0 1px var(--glass-inset), var(--glass-shadow);
   contain: paint;
+  transition: var(--theme-tx);
 }
 
-/* === Liquid glass button === */
+/* ======================================================================
+ * Liquid glass button
+ * ====================================================================== */
 .liquid-btn {
   position: relative;
   display: inline-flex;
@@ -80,26 +201,27 @@ img, svg { display: block; max-width: 100%; }
   font-size: 0.9rem;
   letter-spacing: 0.02em;
   cursor: pointer;
-  background: rgba(255,255,255,0.05);
+  background: var(--lbtn-bg);
   backdrop-filter: blur(8px) saturate(140%);
   -webkit-backdrop-filter: blur(8px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid var(--lbtn-border);
   box-shadow:
-    inset 0 0 0 1px var(--glass-inset),
-    inset 0 1px 0 rgba(255,255,255,0.30),
-    0 8px 24px -8px rgba(0,0,0,0.6);
-  transition: transform 280ms cubic-bezier(.2,.9,.25,1), background 280ms ease, box-shadow 280ms ease;
+    inset 0 0 0 1px var(--lbtn-inset),
+    inset 0 1px 0 var(--lbtn-top),
+    var(--lbtn-shadow);
+  transition: transform 280ms cubic-bezier(.2,.9,.25,1), background 280ms ease, box-shadow 280ms ease, color 320ms ease, border-color 320ms ease;
 }
 .liquid-btn:hover {
   transform: translateY(-1px);
-  background: rgba(255,255,255,0.10);
+  background: var(--lbtn-bg-hover);
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.10),
-    inset 0 1px 0 rgba(255,255,255,0.40),
-    0 12px 32px -8px rgba(0,0,0,0.7);
+    inset 0 0 0 1px var(--lbtn-inset-hover),
+    inset 0 1px 0 var(--lbtn-top-hover),
+    var(--lbtn-shadow-hover);
 }
 .liquid-btn:active { transform: translateY(0); }
 
+/* Primary CTA — burgundy fill works in both themes */
 .liquid-btn-primary {
   background: linear-gradient(180deg, var(--burgundy-deep), #2E0D0E);
   border-color: rgba(155,63,74,0.35);
@@ -121,16 +243,20 @@ img, svg { display: block; max-width: 100%; }
     0 1px 0 rgba(0,0,0,0.3);
 }
 
-/* === Inline burgundy link === */
+/* ======================================================================
+ * Inline burgundy link
+ * ====================================================================== */
 .ink-link {
   color: var(--burgundy-soft);
   border-bottom: 1px solid currentColor;
   padding-bottom: 1px;
   transition: color 200ms ease;
 }
-.ink-link:hover { color: #C46A75; }
+.ink-link:hover { color: var(--burgundy-link-h); }
 
-/* === Live dot pulse === */
+/* ======================================================================
+ * Live dot pulse
+ * ====================================================================== */
 @keyframes pulse-burgundy {
   0%   { box-shadow: 0 0 0 0 rgba(155,63,74,0.65); }
   70%  { box-shadow: 0 0 0 8px rgba(155,63,74,0); }
@@ -138,7 +264,9 @@ img, svg { display: block; max-width: 100%; }
 }
 .live-dot { animation: pulse-burgundy 1.9s ease-out infinite; }
 
-/* === Reveal on scroll === */
+/* ======================================================================
+ * Reveal on scroll
+ * ====================================================================== */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -162,10 +290,12 @@ img, svg { display: block; max-width: 100%; }
   will-change: transform;
 }
 
-/* === Aceternity dim-siblings list (writing) === */
+/* ======================================================================
+ * Aceternity dim-siblings list (writing)
+ * ====================================================================== */
 .dim-list:hover > .dim-row { opacity: 0.4; transition: opacity 200ms ease; }
 .dim-list > .dim-row { transition: opacity 200ms ease, background 200ms ease, padding 200ms ease; }
-.dim-list > .dim-row:hover { opacity: 1 !important; }
+.dim-list > .dim-row:hover { opacity: 1 !important; background: var(--dim-hover-bg); }
 
 /* === Vertical brand label === */
 .vbrand {
@@ -187,7 +317,10 @@ img, svg { display: block; max-width: 100%; }
   transition: transform 80ms linear;
 }
 
-/* === Shader backdrop (Paper Shaders MeshGradient mount target) === */
+/* ======================================================================
+ * Shader backdrop (Paper Shaders MeshGradient mount target)
+ * Hidden in light theme — solid --bg-0 + grain take over.
+ * ====================================================================== */
 #bg-shader {
   position: fixed;
   inset: 0;
@@ -195,29 +328,33 @@ img, svg { display: block; max-width: 100%; }
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  /* ShaderMount injects a <canvas> child sized to fill this div.
-     pointer-events isn't inherited, so re-assert on all descendants
-     to keep the shader from intercepting scroll/pointer events. */
 }
 #bg-shader, #bg-shader * { pointer-events: none; }
 #bg-shader { overflow: hidden; }
 #bg-shader canvas { display: block; width: 100% !important; height: 100% !important; }
+
 .bg-fallback {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(800px 600px at 30% 20%, rgba(40,30,55,0.45), transparent 60%),
-    radial-gradient(700px 500px at 80% 80%, rgba(92,26,27,0.25), transparent 60%),
+    radial-gradient(800px 600px at 30% 20%, var(--bg-fallback-a), transparent 60%),
+    radial-gradient(700px 500px at 80% 80%, var(--bg-fallback-b), transparent 60%),
     var(--bg-0);
+  transition: background 320ms ease;
 }
 
-/* === Static grain overlay === */
+/* ======================================================================
+ * Static grain overlay
+ * ====================================================================== */
 .grain {
   position: fixed; inset: 0; z-index: 1; pointer-events: none;
-  opacity: 0.05; mix-blend-mode: overlay;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/></svg>");
 }
 
-/* === Preloader === */
+/* ======================================================================
+ * Preloader
+ * ====================================================================== */
 .preload {
   position: fixed; inset: 0; z-index: 100;
   background: var(--bg-0);
@@ -238,7 +375,53 @@ body.ready footer,
 body.ready nav,
 body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
 
-/* === Hero scroll-zoom — SVG text + perspective dolly + motion blur + vignette === */
+/* ======================================================================
+ * Theme toggle button — Style A: icon only, top-right fixed
+ * ====================================================================== */
+.theme-toggle {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 70;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lbtn-bg);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid var(--lbtn-border);
+  box-shadow:
+    inset 0 0 0 1px var(--lbtn-inset),
+    inset 0 1px 0 var(--lbtn-top),
+    var(--lbtn-shadow);
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 600ms ease 200ms, visibility 600ms ease 200ms,
+              transform 280ms cubic-bezier(.2,.9,.25,1),
+              background 280ms ease, box-shadow 280ms ease,
+              color 320ms ease, border-color 320ms ease;
+}
+body.ready .theme-toggle { opacity: 1; visibility: visible; }
+.theme-toggle:hover { transform: translateY(-1px); background: var(--lbtn-bg-hover); }
+.theme-toggle:active { transform: translateY(0); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .icon-sun  { display: block; }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+@media (max-width: 768px) {
+  .theme-toggle { top: 16px; right: 16px; width: 36px; height: 36px; }
+  .theme-toggle svg { width: 16px; height: 16px; }
+}
+
+/* ======================================================================
+ * Hero scroll-zoom — SVG text + perspective dolly + motion blur + vignette
+ * ====================================================================== */
 .hero-zoom {
   position: relative;
   height: 240vh;
@@ -286,6 +469,7 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   transform-style: preserve-3d;
   transform: translate3d(0, 0, 0);
   will-change: transform, filter, opacity;
+  color: var(--ink);   /* drives SVG fill via currentColor */
 }
 .hero-svg {
   width: 92%;
@@ -300,10 +484,11 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
 .hero-svg-text {
   font-family: 'Instrument Serif', 'Times New Roman', serif;
   font-size: 168px;
-  fill: #ECECF1;
+  fill: currentColor;
   letter-spacing: -2px;
   font-weight: 400;
   paint-order: stroke;
+  transition: fill 320ms ease;
 }
 .hero-svg-italic {
   font-style: italic;
@@ -317,11 +502,12 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   pointer-events: none;
   z-index: 2;
   background:
-    radial-gradient(ellipse 60% 60% at 50% 56%, transparent 0%, transparent 35%, rgba(8,7,10,0.85) 95%),
-    radial-gradient(circle at 50% 56%, rgba(155,63,74,0.10), transparent 50%);
+    radial-gradient(ellipse 60% 60% at 50% 56%, transparent 0%, transparent 35%, var(--vignette-color) 95%),
+    radial-gradient(circle at 50% 56%, var(--vignette-glow), transparent 50%);
   opacity: 0;
   will-change: opacity;
   mix-blend-mode: normal;
+  transition: background 320ms ease;
 }
 
 /* Post-zoom anchor — fades in as hero-text passes through */
@@ -333,10 +519,12 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
 }
 .post-zoom.lit { opacity: 1; transform: translateY(0); }
 
-/* === Projects horizontal pin-scroll === */
+/* ======================================================================
+ * Projects horizontal pin-scroll
+ * ====================================================================== */
 .proj-pin {
   position: relative;
-  height: 260vh;            /* shorter runway: 2 cards instead of 5 */
+  height: 260vh;
   z-index: 10;
 }
 .proj-pin-inner {
@@ -371,14 +559,16 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   flex-direction: column;
   gap: 1.5rem;
   position: relative;
+  transition: var(--theme-tx);
 }
 .proj-card-media {
   flex: 1 1 auto;
   border-radius: 22px;
-  background: linear-gradient(135deg, rgba(28,22,32,0.7), rgba(14,12,18,0.7));
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--card-media-bg);
+  border: 1px solid var(--card-media-edge);
   position: relative;
   overflow: hidden;
+  transition: var(--theme-tx);
 }
 .proj-card-media img {
   width: 100%;
@@ -433,7 +623,8 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   display: inline-block;
   width: 120px;
   height: 1px;
-  background: rgba(255,255,255,0.12);
+  background: var(--proj-track-bg);
+  transition: background 320ms ease;
 }
 .proj-progress-bar {
   position: absolute;
@@ -451,17 +642,19 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   .proj-track { flex-direction: column; padding: 0 1.5rem; gap: 1rem; transform: none !important; }
   .proj-card { width: 100%; height: auto; min-height: 0; }
   .proj-progress { position: static; transform: none; margin: 2rem auto 0; justify-content: center; }
-  /* Hero zoom kept on mobile — same dolly effect as desktop, scaled by SVG viewBox. */
   .hero-zoom { height: 200vh; }
 }
 
-/* === Prose (essay body) — newsletter aesthetic === */
+/* ======================================================================
+ * Prose (essay body) — newsletter aesthetic
+ * ====================================================================== */
 .prose-essay {
-  color: rgba(236,236,241,0.78);
+  color: var(--prose-fg);
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 17px;
   line-height: 1.75;
   letter-spacing: -0.005em;
+  transition: color 320ms ease;
 }
 .prose-essay > * + * { margin-top: 1.4em; }
 .prose-essay p { max-width: 65ch; }
@@ -490,7 +683,7 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   padding-bottom: 1px;
   transition: color 200ms ease;
 }
-.prose-essay a:hover { color: #C46A75; }
+.prose-essay a:hover { color: var(--burgundy-link-h); }
 .prose-essay strong { color: var(--ink); font-weight: 500; }
 .prose-essay em { font-style: italic; }
 .prose-essay blockquote {
@@ -498,7 +691,7 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   font-style: italic;
   font-size: 1.4rem;
   line-height: 1.45;
-  color: rgba(236,236,241,0.85);
+  color: var(--prose-quote);
   border-left: 2px solid var(--burgundy-soft);
   padding-left: 1.4rem;
   margin-top: 2em;
@@ -510,7 +703,7 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 0.9em;
   padding: 0.15em 0.4em;
-  background: rgba(255,255,255,0.06);
+  background: var(--prose-code-bg);
   border-radius: 4px;
   color: var(--ink);
 }
@@ -518,12 +711,12 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 0.875rem;
   line-height: 1.6;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--prose-pre-bg);
+  border: 1px solid var(--prose-pre-edge);
   border-radius: 12px;
   padding: 1.2rem 1.4rem;
   overflow-x: auto;
-  color: rgba(236,236,241,0.88);
+  color: var(--prose-pre-fg);
   margin-top: 1.6em;
 }
 .prose-essay pre code {
@@ -542,7 +735,7 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
 .prose-essay li::marker { color: var(--burgundy-soft); }
 .prose-essay hr {
   border: 0;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid var(--prose-hr);
   margin: 2.4em 0;
 }
 .prose-essay img {
@@ -555,17 +748,17 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  color: var(--prose-figcaption);
   text-align: center;
   margin-top: 0.6em;
 }
 
-/* === Reduced motion === */
+/* ======================================================================
+ * Reduced motion
+ * ====================================================================== */
 @media (prefers-reduced-motion: reduce) {
   .reveal, .stagger > span, .tilt, .live-dot { transition: none !important; transform: none !important; animation: none !important; }
   .progress { transition: none !important; }
-  /* Shader auto-pauses (speed=0) under reduced-motion; canvas still visible
-     but renders only one static frame, no RAF cost. .bg-fallback as belt+suspenders. */
   .bg-fallback { display: block; }
   .hero-zoom { height: 100vh; }
   .hero-pin { position: static; height: 100vh; perspective: none; padding: 8rem 6vw; display: flex; align-items: center; justify-content: center; }
@@ -577,3 +770,23 @@ body.ready aside { transition: opacity 600ms ease 100ms; opacity: 1; }
   .proj-track { flex-direction: column; transform: none !important; padding: 0 1.5rem; }
   .proj-card { width: 100%; height: auto; min-height: 0; }
 }
+
+/* ======================================================================
+ * Tailwind-utility light-theme overrides
+ * (HTML uses inline `text-white/65`, `border-white/[0.06]`, etc. The CDN
+ * Tailwind has no `dark:` config, so we override these utilities directly
+ * when [data-theme="light"] is set.)
+ * ====================================================================== */
+[data-theme="light"] .text-white\/85,
+[data-theme="light"] .text-white\/85 * { color: rgba(26,21,23,0.85); }
+[data-theme="light"] .text-white\/65 { color: rgba(26,21,23,0.7); }
+[data-theme="light"] .text-white\/60 { color: rgba(26,21,23,0.65); }
+[data-theme="light"] .text-white\/55 { color: rgba(26,21,23,0.6); }
+[data-theme="light"] .text-white\/40 { color: rgba(26,21,23,0.5); }
+[data-theme="light"] .text-white\/35 { color: rgba(26,21,23,0.5); }
+[data-theme="light"] .text-white\/20 { color: rgba(26,21,23,0.25); }
+
+[data-theme="light"] .border-white\/\[0\.06\] { border-color: rgba(40,20,25,0.10); }
+[data-theme="light"] .bg-white\/\[0\.03\] { background-color: rgba(40,20,25,0.04); }
+[data-theme="light"] .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(40,20,25,0.04); }
+[data-theme="light"] .hover\:text-white:hover { color: var(--ink); }

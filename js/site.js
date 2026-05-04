@@ -135,4 +135,45 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
+
+  /* === Theme toggle === */
+  /* FOUC script in <head> already applied persisted theme before paint.
+     This handler only manages click → toggle → persist + meta sync. */
+  const THEME_COLOR_DARK  = '#08070A';
+  const THEME_COLOR_LIGHT = '#F0EBE3';
+
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  }
+
+  function applyTheme(theme, btn, meta) {
+    if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    else document.documentElement.removeAttribute('data-theme');
+    if (meta) meta.setAttribute('content', theme === 'light' ? THEME_COLOR_LIGHT : THEME_COLOR_DARK);
+    if (btn) btn.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+  }
+
+  const themeBtn  = document.getElementById('theme-toggle');
+  const themeMeta = document.getElementById('theme-color-meta');
+  if (themeBtn) {
+    applyTheme(currentTheme(), themeBtn, themeMeta);
+    themeBtn.addEventListener('click', () => {
+      const next = currentTheme() === 'light' ? 'dark' : 'light';
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      applyTheme(next, themeBtn, themeMeta);
+    });
+
+    /* Also listen to system pref changes when user has not chosen explicitly. */
+    if (window.matchMedia) {
+      const mq = window.matchMedia('(prefers-color-scheme: light)');
+      const sysListener = (e) => {
+        let saved;
+        try { saved = localStorage.getItem('theme'); } catch (_) {}
+        if (saved === 'light' || saved === 'dark') return;   /* explicit choice wins */
+        applyTheme(e.matches ? 'light' : 'dark', themeBtn, themeMeta);
+      };
+      if (mq.addEventListener) mq.addEventListener('change', sysListener);
+      else if (mq.addListener) mq.addListener(sysListener);
+    }
+  }
 })();

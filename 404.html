@@ -4,6 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>404 — Aiden Chen</title>
+  <meta name="theme-color" id="theme-color-meta" content="#08070A" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefer = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        var t = (saved === 'light' || saved === 'dark') ? saved : prefer;
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          var m = document.getElementById('theme-color-meta');
+          if (m) m.setAttribute('content', '#F0EBE3');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +28,17 @@
 <body>
   <div class="bg-fallback"></div>
   <div class="grain"></div>
+
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
   <main class="relative z-10 min-h-screen flex items-center justify-center px-6 text-center">
     <div>
       <p class="mono text-xs uppercase tracking-[0.4em]" style="color: var(--burgundy-soft);">— 404 —</p>
@@ -21,5 +47,7 @@
       <a href="/" class="liquid-btn mt-10 inline-flex">← back home</a>
     </div>
   </main>
+
+  <script src="/js/site.js"></script>
 </body>
 </html>
