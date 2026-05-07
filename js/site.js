@@ -136,9 +136,13 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
 
-  /* === Theme toggle === */
-  /* FOUC script in <head> already applied persisted theme before paint.
-     This handler only manages click → toggle → persist + meta sync. */
+  /* === Theme toggle ===
+     FOUC script in <head> resolves the theme before paint:
+       sessionStorage.theme wins; else per-page default (/blog/* → light, else → dark).
+     First visit does NOT write storage — the per-page default keeps applying
+     across pages until the user explicitly toggles. On toggle, the choice is
+     persisted in sessionStorage (tab-scoped); closing the tab or opening a
+     new one resets to the per-page default. */
   const THEME_COLOR_DARK  = '#08070A';
   const THEME_COLOR_LIGHT = '#F0EBE3';
 
@@ -159,21 +163,8 @@
     applyTheme(currentTheme(), themeBtn, themeMeta);
     themeBtn.addEventListener('click', () => {
       const next = currentTheme() === 'light' ? 'dark' : 'light';
-      try { localStorage.setItem('theme', next); } catch (e) {}
       applyTheme(next, themeBtn, themeMeta);
+      try { sessionStorage.setItem('theme', next); } catch (e) {}
     });
-
-    /* Also listen to system pref changes when user has not chosen explicitly. */
-    if (window.matchMedia) {
-      const mq = window.matchMedia('(prefers-color-scheme: light)');
-      const sysListener = (e) => {
-        let saved;
-        try { saved = localStorage.getItem('theme'); } catch (_) {}
-        if (saved === 'light' || saved === 'dark') return;   /* explicit choice wins */
-        applyTheme(e.matches ? 'light' : 'dark', themeBtn, themeMeta);
-      };
-      if (mq.addEventListener) mq.addEventListener('change', sysListener);
-      else if (mq.addListener) mq.addListener(sysListener);
-    }
   }
 })();

@@ -6,17 +6,19 @@
   <title>Why Stablecoins Won't Eat Visa — Aiden Chen</title>
   <meta name="theme-color" id="theme-color-meta" content="#08070A" />
   <script>
+    /* Theme resolution: sessionStorage.theme wins; else per-page default
+       (/blog/* → light, else → dark). First visit does not write storage. */
     (function () {
-      try {
-        var saved = localStorage.getItem('theme');
-        var prefer = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        var t = (saved === 'light' || saved === 'dark') ? saved : prefer;
-        if (t === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
-          var m = document.getElementById('theme-color-meta');
-          if (m) m.setAttribute('content', '#F0EBE3');
-        }
-      } catch (e) {}
+      var stored = null;
+      try { stored = sessionStorage.getItem('theme'); } catch (e) {}
+      var theme = (stored === 'light' || stored === 'dark')
+        ? stored
+        : (/\/blog\//.test(location.pathname) ? 'light' : 'dark');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        var m = document.getElementById('theme-color-meta');
+        if (m) m.setAttribute('content', '#F0EBE3');
+      }
     })();
   </script>
 

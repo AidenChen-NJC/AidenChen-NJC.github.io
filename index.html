@@ -6,19 +6,21 @@
   <title>Aiden Chen</title>
   <meta name="theme-color" id="theme-color-meta" content="#08070A" />
   <script>
-    /* FOUC-prevention: applies persisted/system theme before stylesheet loads.
-       Must stay inline + synchronous + above tokens.css. */
+    /* Theme resolution: sessionStorage.theme wins; otherwise per-page default
+       (/blog/* → light, everywhere else → dark). First visit does NOT write
+       to storage — only an explicit toggle persists. Must stay inline +
+       synchronous + above tokens.css to avoid FOUC. */
     (function () {
-      try {
-        var saved = localStorage.getItem('theme');
-        var prefer = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        var t = (saved === 'light' || saved === 'dark') ? saved : prefer;
-        if (t === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
-          var m = document.getElementById('theme-color-meta');
-          if (m) m.setAttribute('content', '#F0EBE3');
-        }
-      } catch (e) { /* localStorage blocked — fall through to dark default */ }
+      var stored = null;
+      try { stored = sessionStorage.getItem('theme'); } catch (e) {}
+      var theme = (stored === 'light' || stored === 'dark')
+        ? stored
+        : (/\/blog\//.test(location.pathname) ? 'light' : 'dark');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        var m = document.getElementById('theme-color-meta');
+        if (m) m.setAttribute('content', '#F0EBE3');
+      }
     })();
   </script>
 
