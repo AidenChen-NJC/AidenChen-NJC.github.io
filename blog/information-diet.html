@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You need an information diet — Aiden Chen</title>
+  <meta name="theme-color" id="theme-color-meta" content="#08070A" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefer = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        var t = (saved === 'light' || saved === 'dark') ? saved : prefer;
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          var m = document.getElementById('theme-color-meta');
+          if (m) m.setAttribute('content', '#F0EBE3');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <meta property="og:title" content="You need an information diet" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aidenchen-njc.github.io/blog/information-diet.html" />
+  <meta property="article:published_time" content="2026-05-07" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><rect width=%2216%22 height=%2216%22 fill=%22%2308070A%22/><text x=%228%22 y=%2212%22 font-family=%22serif%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%239B3F4A%22>A</text></svg>" />
+</head>
+
+<body>
+  <div class="preload" id="preload"><span class="preload__dot"></span></div>
+
+  <div class="bg-fallback" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="progress"></div>
+
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
+  <main class="relative z-10">
+    <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
+
+      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+        <span>←</span> back home
+      </a>
+
+      <header class="mt-16 mb-12">
+        <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
+          <span>2026.05</span>
+          <span class="text-white/25 mx-2">·</span>
+          <span>3 min</span>
+        </p>
+        <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
+          You need an information diet
+        </h1>
+        <p class="mt-6 text-white/65 text-lg leading-relaxed">
+          Human focus caps at 4 hours a day. I was burning the first hour on X &mdash; so I built a pipeline that distills my chosen sources through a VC, a domain expert, and a founder, and ships at noon.
+        </p>
+      </header>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <div class="prose-essay">
+        <!-- BODY START -->
+
+        <p>Everyone should have their own information consumption system, just like your diet.</p>
+
+        <p>Imagine this.</p>
+
+        <ul>
+          <li>You can only have 6,000 thoughts a day. Even &ldquo;I want pasta for dinner&rdquo; counts as 1.</li>
+          <li>You are at your prime for 4 hours a day. The rest of the day, you are only 30% as sharp as you were at your prime.</li>
+        </ul>
+
+        <p>It&rsquo;s f-king the sh-t out of me.</p>
+
+        <p>Because it&rsquo;s not imagination. It&rsquo;s true.</p>
+
+        <p>Human focus has a cap.</p>
+
+        <ul>
+          <li>You think ~6,200 independent thoughts a day. <span class="text-white/40">(Tseng &amp; Poppenk, <em>Nature Communications</em>, 2020)</span></li>
+          <li>Peak cognitive performance caps at ~4 hours a day, even for elite performers. Beyond that, returns drop sharply. <span class="text-white/40">(Ericsson, 1993)</span></li>
+          <li>After 3 hours of focused work, miss rates rise 71% and reaction times slow ~5%. <span class="text-white/40">(Boksem et al., 2005)</span></li>
+          <li>Even with 10-min breaks every 50 min, cognitive efficiency doesn&rsquo;t fully recover after 4.5 hours of rest. <span class="text-white/40">(Brazaitis &amp; Satas, 2023)</span></li>
+        </ul>
+
+        <p>Dickens. Hemingway. Stephen King. All wrote for only 4 hours a day. The rest was recovery.</p>
+
+        <blockquote>
+          Essentially no benefit from durations exceeding 4 hr per day and reduced benefits from practice exceeding 2 hr&hellip; the effective duration of deliberate practice may be closer to 1 hr per day.
+          <footer class="mono text-[11px] uppercase tracking-[0.2em] mt-3" style="color: var(--prose-figcaption);">&mdash; Ericsson, Krampe &amp; Tesch-R&ouml;mer, 1993</footer>
+        </blockquote>
+
+        <hr />
+
+        <p>Now, let&rsquo;s imagine this now.</p>
+
+        <ul>
+          <li>You woke up. You doomscroll for 10 mins. Felt guilty. Open news, looking at stock prices, what Trump did, how many new features Claude shipped last night.</li>
+          <li>Information anxiety whispering into your ear that you are missing out.</li>
+        </ul>
+
+        <p>That&rsquo;s me, every day, for months now since AI is everywhere and you&rsquo;re not cool if you don&rsquo;t vibe code.</p>
+
+        <p>I get even more frustrated after my research, knowing that I get 4 hours of peak focus a day, and I probably burned 1 hour of it on X before 9am.</p>
+
+        <p>So I built my own source of information.</p>
+
+        <hr />
+
+        <h2>Pain</h2>
+
+        <ul>
+          <li>News has no &ldquo;so-what.&rdquo; I read newsletters, X accounts, 5 podcasts. My inbox is a graveyard of headlines, and none of them tell me what to do with the information.</li>
+          <li>Social media is full of noise.</li>
+          <li>I have a preference. I only want to see specific news about specific areas.</li>
+        </ul>
+
+        <hr />
+
+        <h2>Solution</h2>
+
+        <p>12:00 noon, daily. A pipeline kicks off on my Mac. End results are a web edition at GitHub Pages, a Telegram chatbot, and a two-host Mandarin podcast generated via NotebookLM.</p>
+
+        <hr />
+
+        <h2>What does what</h2>
+
+        <h3>Step 1 &mdash; Collect.</h3>
+        <p>A Claude CLI agent with Gmail and WebSearch tools pulls raw material from subscribed newsletters and X. An aggregator, but only of my designated sources, ensuring no noise.</p>
+
+        <h3>Step 2 &mdash; Interrogate.</h3>
+        <p>Opus runs three personas in parallel: VC, Domain Expert, Founder. Each one generates the questions worth asking of today&rsquo;s material. This is where the insight starts: we&rsquo;re not summarizing yet, we&rsquo;re surfacing what a smart room would argue about.</p>
+
+        <h3>Step 3 &mdash; Self-Answer.</h3>
+        <p>Opus runs two batches in parallel, answering each question and citing back to the Step 1 source material. Answers without source backing get cut. This step kills the model&rsquo;s habit of default-to-grandiose.</p>
+
+        <h3>Step 4 &mdash; Draft.</h3>
+        <p>Reorganizes the Q&amp;A into editorial articles with the three-zone structure: facts, &ldquo;So What?&rdquo;, &ldquo;Worth asking.&rdquo;</p>
+
+        <h3>Step 5 &mdash; Render.</h3>
+        <p>Produces the HTML.</p>
+
+        <h3>Step 6 &mdash; Podcast.</h3>
+        <p>NotebookLM automation creates a notebook, uploads the draft, configures a two-host Mandarin deep-dive persona, generates the audio.</p>
+
+        <h3>Step 7 &mdash; Publish.</h3>
+
+        <hr />
+
+        <p>Other newsletters give you the headline and the summary. This one gives you what a VC, a domain expert, and a founder would argue about over coffee after reading the same headlines.</p>
+
+        <p>That&rsquo;s the idea.</p>
+
+        <div class="my-12 px-6 py-10 md:px-10 md:py-12 rounded-2xl border border-white/[0.08] bg-white/[0.025] text-center">
+          <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 mb-4">Live edition</p>
+          <a href="https://aidenchen-njc.github.io/daily-briefing/briefings.html" class="serif text-2xl md:text-[1.75rem] leading-[1.2]" style="color: var(--burgundy-soft); border-bottom: 1px solid currentColor; padding-bottom: 2px;">
+            Check it out &rarr;
+          </a>
+        </div>
+
+        <p>The real sauce is in Step 2 to 4 &mdash; how I&rsquo;m setting up real questions and real answers with insight, without hallucination.</p>
+
+        <p>Happy to chat if you are interested.</p>
+
+        <hr />
+
+        <h2>References</h2>
+
+        <ol>
+          <li>Tseng, J., &amp; Poppenk, J. (2020). Brain meta-state transitions demarcate thoughts across task contexts exposing the mental noise of trait neuroticism. <em>Nature Communications</em>, 11, 3480. <a href="https://doi.org/10.1038/s41467-020-17255-9">https://doi.org/10.1038/s41467-020-17255-9</a></li>
+          <li>Ericsson, K. A., Krampe, R. T., &amp; Tesch-R&ouml;mer, C. (1993). The role of deliberate practice in the acquisition of expert performance. <em>Psychological Review</em>, 100(3), 363&ndash;406. <a href="https://doi.org/10.1037/0033-295X.100.3.363">https://doi.org/10.1037/0033-295X.100.3.363</a></li>
+          <li>Boksem, M. A. S., Meijman, T. F., &amp; Lorist, M. M. (2005). Effects of mental fatigue on attention: An ERP study. <em>Cognitive Brain Research</em>, 25(1), 107&ndash;116. <a href="https://doi.org/10.1016/j.cogbrainres.2005.04.011">https://doi.org/10.1016/j.cogbrainres.2005.04.011</a></li>
+          <li>Brazaitis, M., &amp; Satas, A. (2023). Regular short-duration breaks do not prevent mental fatigue and decline in cognitive efficiency in healthy young men during an office-like simulated mental working day: An EEG study. <em>International Journal of Psychophysiology</em>, 188, 33&ndash;46. <a href="https://doi.org/10.1016/j.ijpsycho.2023.03.007">https://doi.org/10.1016/j.ijpsycho.2023.03.007</a></li>
+        </ol>
+
+        <!-- BODY END -->
+      </div>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <footer class="flex items-center justify-between flex-wrap gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors">&larr; back home</a>
+        <p class="mono text-[10px] uppercase tracking-[0.3em] text-white/35">&copy; 2026 aiden chen</p>
+      </footer>
+
+    </article>
+  </main>
+  <script src="/js/site.js"></script>
+</body>
+</html>

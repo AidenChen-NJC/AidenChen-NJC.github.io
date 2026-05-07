@@ -688,10 +688,11 @@ body.ready .theme-toggle { opacity: 1; visibility: visible; }
 .prose-essay strong { color: var(--ink); font-weight: 500; }
 .prose-essay em { font-style: italic; }
 .prose-essay blockquote {
-  font-family: 'Instrument Serif', serif;
+  font-family: ui-serif, Georgia, Cambria, 'Times New Roman', serif;
   font-style: italic;
-  font-size: 1.4rem;
-  line-height: 1.45;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  letter-spacing: 0;
   color: var(--prose-quote);
   border-left: 2px solid var(--burgundy-soft);
   padding-left: 1.4rem;
