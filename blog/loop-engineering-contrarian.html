@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -73,7 +73,7 @@
           Loop Engineering
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          X 上的新敘事：別再逐句 prompt，去寫那個會替你 prompt 的 loop。但邏輯不太對 &mdash; loop 本身只是 <code>while true</code>，免費，而且會把單步錯誤指數放大。真正稀缺的不是迴圈，是讓它跑歪也賠不多的那層約束面。
+          The new narrative on X: stop prompting line by line, go write the loop that prompts for you. But the logic is off &mdash; a loop is just <code>while true</code>. It's free, and it compounds single-step error exponentially. What's scarce isn't the loop; it's the constraint layer that keeps a runaway loop from costing you much.
         </p>
       </header>
 
@@ -83,68 +83,68 @@
         <!-- BODY START -->
 
         <blockquote>
-          X 的 Hype：別再 prompt，去寫 loop。<br />
-          邏輯不太對。Loop 本身是 <code>while true</code>。免費、而且會把單步錯誤率指數放大。<br />
-          自主性不只是自動化，而是槓桿，風險也被放大。<br />
-          真正稀缺的是「喊停修正」的能力。<br />
-          做對的人不是寫更漂亮的 loop。是建一個「就算 loop 跑歪、也賠不多」的約束面。
+          The X hype: stop prompting, go write loops.<br />
+          The logic is off. A loop is just <code>while true</code>. Free &mdash; and it amplifies your per-step error rate exponentially.<br />
+          Autonomy isn't just automation; it's leverage &mdash; and it magnifies risk too.<br />
+          What's actually scarce is the ability to call stop and correct.<br />
+          The people getting this right aren't writing prettier loops. They're building a constraint surface where even if the loop goes wrong, it doesn't cost much.
         </blockquote>
 
-        <h2>一、Loop 是什麼</h2>
+        <h2>1. What a loop is</h2>
 
-        <p>最近 X 上有一條敘事越來越紅：你不該再逐句 prompt coding agent，你該去設計那個會替你 prompt agent 的 loop。Addy Osmani 命名為 &ldquo;Loop Engineering&rdquo;。Boris Cherny 也說他現在不 prompt Claude 了，他寫 loop，由 loop 去 prompt Claude。</p>
+        <p>Lately a narrative has been gaining traction on X: you shouldn't be prompting your coding agent line by line anymore &mdash; you should be designing the loop that prompts the agent for you. Addy Osmani named it &ldquo;Loop Engineering.&rdquo; Boris Cherny says he doesn't prompt Claude anymore either; he writes a loop, and the loop prompts Claude.</p>
 
-        <p>層級是：</p>
+        <p>The hierarchy goes:</p>
 
-        <pre><code>Prompt engineering   → 你送出的「字」
-Context engineering  → 模型看得到的「全部資訊」
-Harness engineering  → agent 跑的「環境」（tools / sandbox / hooks / recovery）
-Loop engineering     → 驅動 agent 朝目標跑的「迭代循環」</code></pre>
+        <pre><code>Prompt engineering   → the "words" you send
+Context engineering  → "everything" the model can see
+Harness engineering  → the "environment" the agent runs in (tools / sandbox / hooks / recovery)
+Loop engineering     → the "iteration cycle" that drives the agent toward a goal</code></pre>
 
-        <p>loop = 一個遞迴目標。定了目標後，agent 自己接收 → 思考 → 行動 → 觀察結果 → 重複直到一個「可驗證的停止條件」成立。</p>
+        <p>A loop is a recursive goal. Once the goal is set, the agent receives it on its own → thinks → acts → observes the result → repeats until a &ldquo;verifiable stop condition&rdquo; holds.</p>
 
-        <h2>二、Loop 的底層邏輯</h2>
+        <h2>2. The logic underneath</h2>
 
-        <p>底層就是 <strong>ReAct</strong>（Reason + Act）：想一步、做一步、看結果、再想。Loop engineering 只是把這個 cell 接上三件外掛：</p>
+        <p>Underneath, it's just <strong>ReAct</strong> (Reason + Act): think a step, do a step, look at the result, think again. Loop engineering just wires three add-ons onto that cell:</p>
 
         <ul>
-          <li><strong>State</strong>：記憶寫在 context 之外（跨 session 還是能用）。</li>
-          <li><strong>Verifier</strong>：另一個用於打分驗證結果的模型。</li>
-          <li><strong>Termination</strong>：step ceiling、token budget、stall detection, etc。</li>
+          <li><strong>State</strong>: memory written outside the context (still usable across sessions).</li>
+          <li><strong>Verifier</strong>: a second model that scores and validates the result.</li>
+          <li><strong>Termination</strong>: step ceiling, token budget, stall detection, etc.</li>
         </ul>
 
-        <p>所以「loop engineering 是新典範」這個敘事，底層其實是一句話：<strong>槓桿從「寫好一句 prompt」變成「設計那個會一直 prompt 的控制系統」。</strong></p>
+        <p>So the &ldquo;loop engineering is a new paradigm&rdquo; narrative really comes down to one sentence: <strong>the leverage shifts from &ldquo;writing one good prompt&rdquo; to &ldquo;designing the control system that keeps prompting.&rdquo;</strong></p>
 
-        <p>真正在賣的情緒是：What if 我們可以把「人」這個 bottleneck 從迴圈裡抽掉？</p>
+        <p>The emotion it's actually selling is: what if we could pull the human &mdash; the bottleneck &mdash; out of the loop?</p>
 
-        <h2>三、Loop 的價值在哪裡</h2>
+        <h2>3. Where the value actually is</h2>
 
-        <p>假設每步 AI 產出是 95% 正確、跑 20 步，端到端正確率只剩 36%：</p>
+        <p>Suppose each AI step is 95% correct and you run 20 steps. End-to-end correctness drops to 36%:</p>
 
         <blockquote>
           0.95<sup>20</sup> &asymp; 0.36
         </blockquote>
 
-        <p>這是錯誤率的複利效應。模型把自己上一步的錯誤讀進 context，會更容易在下一步沿用它。Step 3 出錯了，step 4 在污染過的 context 上跑，step 5 在「污染 + step 4 新增的污染」上跑。</p>
+        <p>This is compounding error. The model reads its own previous mistake back into context and is then more likely to carry it forward. Step 3 goes wrong, step 4 runs on polluted context, step 5 runs on &ldquo;the pollution plus whatever step 4 added.&rdquo;</p>
 
         <blockquote>
-          大眾把「自主性」當成價值來源。但是自主性本身不產生價值。
+          Most people treat &ldquo;autonomy&rdquo; as the source of value. But autonomy by itself produces nothing.
         </blockquote>
 
-        <p><code>while true</code> 是免費的。任何人三行寫得出來。<strong>稀缺的從來不是迴圈，是迴圈裡真的有用的 termination，以及一個真的會看見錯誤的 Verifier。</strong></p>
+        <p><code>while true</code> is free. Anyone can write it in three lines. <strong>What's scarce was never the loop &mdash; it's a termination condition that's actually useful, and a verifier that actually sees the errors.</strong></p>
 
-        <p>反過來：一個 loop 呼叫的是被測過、可以重複使用的 skill，那才會複利。<strong>價值在 skill 與 verifier，不在 loop。</strong></p>
+        <p>Flip it: a loop that calls a tested, reusable skill &mdash; that's what compounds. <strong>The value lives in the skill and the verifier, not in the loop.</strong></p>
 
-        <h2>四、怎麼正確的使用 Loop</h2>
+        <h2>4. How to use loops correctly</h2>
 
-        <p>多數人先寫 loop 再想驗證，但我認為應該相反。</p>
+        <p>Most people write the loop first and think about verification later. I think it should be the other way around.</p>
 
         <ol>
-          <li><strong>可驗證性是前提，不是功能。</strong> 寫不出 checkable 成功條件，就別 loop。確定性目標好辦（tests pass / CI green / lint clean）。模糊目標（&ldquo;build this feature&rdquo;）先寫 spec，把「done 長什麼樣」寫死。這步才是 loop engineering 真正難、也真正值錢的地方。</li>
-          <li><strong>先手動做。</strong> 你自動化不了你描述不出來的東西。挑一個你團隊常做的無聊流程，自己跑三遍，把你「沒意識到自己在做」的決策寫下來。那份筆記就是你的 skill。</li>
-          <li><strong>單 agent、單流程、單可量測結果先過。</strong> 別一開始就上五個 agent 平行。三個 70% 串起來是 34%，先證明「一個」在你真實環境穩，再展開。</li>
-          <li><strong>Verifier 和 Termination 設好。</strong> 我自己有一個 agent 專門攻擊我開發的工具，抓出自己的漏洞。</li>
-          <li><strong>Global level 的 <code>lessons.md</code>。</strong> 建立一個 global 以及 project level 的學習迴圈，把每次 debug 的內容、Claude 常犯的錯誤寫進 <code>lessons.md</code>，讓每次都持續學習、並套用之前學到的點。</li>
+          <li><strong>Verifiability is the precondition, not a feature.</strong> If you can't write a checkable success condition, don't loop. Deterministic goals are easy (tests pass / CI green / lint clean). For fuzzy goals (&ldquo;build this feature&rdquo;), write the spec first and pin down what &ldquo;done&rdquo; looks like. This step is where loop engineering is genuinely hard &mdash; and genuinely valuable.</li>
+          <li><strong>Do it by hand first.</strong> You can't automate what you can't describe. Pick a boring process your team runs often, do it yourself three times, and write down the decisions you didn't realize you were making. That note is your skill.</li>
+          <li><strong>Get one agent, one flow, one measurable result working first.</strong> Don't start with five agents in parallel. Three 70% steps chained together is 34%. Prove that <em>one</em> is stable in your real environment before you scale out.</li>
+          <li><strong>Set up the verifier and termination.</strong> I keep an agent whose whole job is to attack the tools I build and surface my own vulnerabilities.</li>
+          <li><strong>A global-level <code>lessons.md</code>.</strong> Build a learning loop at both global and project level: write every debug session and every recurring Claude mistake into <code>lessons.md</code>, so each run keeps learning and applies what it learned before.</li>
         </ol>
 
         <!-- BODY END -->
