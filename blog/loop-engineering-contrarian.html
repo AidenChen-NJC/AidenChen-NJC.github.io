@@ -73,7 +73,7 @@
           Loop Engineering
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          The new narrative on X: stop prompting line by line, go write the loop that prompts for you. But the logic is off &mdash; a loop is just <code>while true</code>. It's free, and it compounds single-step error exponentially. What's scarce isn't the loop; it's the constraint layer that keeps a runaway loop from costing you much.
+          The new narrative on X: stop prompting line by line, write the loop that prompts for you instead. But the logic is off. A loop is just <code>while true</code>. It's free, and it compounds single-step error exponentially. What's scarce isn't the loop. It's the constraint layer that keeps a runaway loop from costing much.
         </p>
       </header>
 
@@ -83,16 +83,16 @@
         <!-- BODY START -->
 
         <blockquote>
-          The X hype: stop prompting, go write loops.<br />
-          The logic is off. A loop is just <code>while true</code>. Free &mdash; and it amplifies your per-step error rate exponentially.<br />
-          Autonomy isn't just automation; it's leverage &mdash; and it magnifies risk too.<br />
+          The X hype: stop prompting, write loops.<br />
+          The logic is off. A loop is just <code>while true</code>. Free, and it amplifies your per-step error rate exponentially.<br />
+          Autonomy isn't just automation. It's leverage, so it magnifies risk too.<br />
           What's actually scarce is the ability to call stop and correct.<br />
-          The people getting this right aren't writing prettier loops. They're building a constraint surface where even if the loop goes wrong, it doesn't cost much.
+          The people getting this right aren't writing prettier loops. They're building a constraint surface where a loop going wrong doesn't cost much.
         </blockquote>
 
         <h2>1. What a loop is</h2>
 
-        <p>Lately a narrative has been gaining traction on X: you shouldn't be prompting your coding agent line by line anymore &mdash; you should be designing the loop that prompts the agent for you. Addy Osmani named it &ldquo;Loop Engineering.&rdquo; Boris Cherny says he doesn't prompt Claude anymore either; he writes a loop, and the loop prompts Claude.</p>
+        <p>Lately a narrative has been gaining traction on X: you shouldn't prompt your coding agent line by line anymore. You should design the loop that prompts the agent for you. Addy Osmani named it &ldquo;Loop Engineering.&rdquo; Boris Cherny says he doesn't prompt Claude anymore either; he writes a loop, and the loop prompts Claude.</p>
 
         <p>The hierarchy goes:</p>
 
@@ -101,11 +101,11 @@ Context engineering  → "everything" the model can see
 Harness engineering  → the "environment" the agent runs in (tools / sandbox / hooks / recovery)
 Loop engineering     → the "iteration cycle" that drives the agent toward a goal</code></pre>
 
-        <p>A loop is a recursive goal. Once the goal is set, the agent receives it on its own → thinks → acts → observes the result → repeats until a &ldquo;verifiable stop condition&rdquo; holds.</p>
+        <p>A loop is a recursive goal. Once the goal is set, the agent takes it from there: think, act, observe the result, repeat, until a &ldquo;verifiable stop condition&rdquo; holds.</p>
 
         <h2>2. The logic underneath</h2>
 
-        <p>Underneath, it's just <strong>ReAct</strong> (Reason + Act): think a step, do a step, look at the result, think again. Loop engineering just wires three add-ons onto that cell:</p>
+        <p>Underneath, it's just <strong>ReAct</strong> (Reason + Act): think a step, do a step, look at the result, think again. Loop engineering wires three add-ons onto that cell:</p>
 
         <ul>
           <li><strong>State</strong>: memory written outside the context (still usable across sessions).</li>
@@ -113,9 +113,9 @@ Loop engineering     → the "iteration cycle" that drives the agent toward a go
           <li><strong>Termination</strong>: step ceiling, token budget, stall detection, etc.</li>
         </ul>
 
-        <p>So the &ldquo;loop engineering is a new paradigm&rdquo; narrative really comes down to one sentence: <strong>the leverage shifts from &ldquo;writing one good prompt&rdquo; to &ldquo;designing the control system that keeps prompting.&rdquo;</strong></p>
+        <p>So the &ldquo;loop engineering is a new paradigm&rdquo; narrative comes down to one sentence: <strong>the leverage shifts from writing one good prompt to designing the control system that keeps prompting.</strong></p>
 
-        <p>The emotion it's actually selling is: what if we could pull the human &mdash; the bottleneck &mdash; out of the loop?</p>
+        <p>The emotion it's actually selling: what if we could pull the human, the bottleneck, out of the loop?</p>
 
         <h2>3. Where the value actually is</h2>
 
@@ -125,22 +125,22 @@ Loop engineering     → the "iteration cycle" that drives the agent toward a go
           0.95<sup>20</sup> &asymp; 0.36
         </blockquote>
 
-        <p>This is compounding error. The model reads its own previous mistake back into context and is then more likely to carry it forward. Step 3 goes wrong, step 4 runs on polluted context, step 5 runs on &ldquo;the pollution plus whatever step 4 added.&rdquo;</p>
+        <p>This is compounding error. The model reads its own previous mistake back into context and grows more likely to carry it forward. Step 3 goes wrong, step 4 runs on polluted context, step 5 runs on that pollution plus whatever step 4 added.</p>
 
         <blockquote>
           Most people treat &ldquo;autonomy&rdquo; as the source of value. But autonomy by itself produces nothing.
         </blockquote>
 
-        <p><code>while true</code> is free. Anyone can write it in three lines. <strong>What's scarce was never the loop &mdash; it's a termination condition that's actually useful, and a verifier that actually sees the errors.</strong></p>
+        <p><code>while true</code> is free. Anyone can write it in three lines. <strong>What's scarce was never the loop. It's a termination condition that's actually useful, and a verifier that actually sees the errors.</strong></p>
 
-        <p>Flip it: a loop that calls a tested, reusable skill &mdash; that's what compounds. <strong>The value lives in the skill and the verifier, not in the loop.</strong></p>
+        <p>Flip it: a loop that calls a tested, reusable skill is what compounds. <strong>The value lives in the skill and the verifier, not the loop.</strong></p>
 
         <h2>4. How to use loops correctly</h2>
 
-        <p>Most people write the loop first and think about verification later. I think it should be the other way around.</p>
+        <p>Most people write the loop first and think about verification later. I think it's the other way around.</p>
 
         <ol>
-          <li><strong>Verifiability is the precondition, not a feature.</strong> If you can't write a checkable success condition, don't loop. Deterministic goals are easy (tests pass / CI green / lint clean). For fuzzy goals (&ldquo;build this feature&rdquo;), write the spec first and pin down what &ldquo;done&rdquo; looks like. This step is where loop engineering is genuinely hard &mdash; and genuinely valuable.</li>
+          <li><strong>Verifiability is the precondition, not a feature.</strong> If you can't write a checkable success condition, don't loop. Deterministic goals are easy (tests pass / CI green / lint clean). For fuzzy goals (&ldquo;build this feature&rdquo;), write the spec first and pin down what &ldquo;done&rdquo; looks like. This is where loop engineering is genuinely hard, and genuinely valuable.</li>
           <li><strong>Do it by hand first.</strong> You can't automate what you can't describe. Pick a boring process your team runs often, do it yourself three times, and write down the decisions you didn't realize you were making. That note is your skill.</li>
           <li><strong>Get one agent, one flow, one measurable result working first.</strong> Don't start with five agents in parallel. Three 70% steps chained together is 34%. Prove that <em>one</em> is stable in your real environment before you scale out.</li>
           <li><strong>Set up the verifier and termination.</strong> I keep an agent whose whole job is to attack the tools I build and surface my own vulnerabilities.</li>
