@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loop Engineering — Aiden Chen</title>
+  <meta name="theme-color" id="theme-color-meta" content="#08070A" />
+  <script>
+    /* Theme resolution: sessionStorage.theme wins; else per-page default
+       (/blog/* → light, else → dark). First visit does not write storage. */
+    (function () {
+      var stored = null;
+      try { stored = sessionStorage.getItem('theme'); } catch (e) {}
+      var theme = (stored === 'light' || stored === 'dark')
+        ? stored
+        : (/\/blog\//.test(location.pathname) ? 'light' : 'dark');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        var m = document.getElementById('theme-color-meta');
+        if (m) m.setAttribute('content', '#F0EBE3');
+      }
+    })();
+  </script>
+
+  <meta property="og:title" content="Loop Engineering" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aidenchen-njc.github.io/blog/loop-engineering-contrarian.html" />
+  <meta property="article:published_time" content="2026-06-19" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><rect width=%2216%22 height=%2216%22 fill=%22%2308070A%22/><text x=%228%22 y=%2212%22 font-family=%22serif%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%239B3F4A%22>A</text></svg>" />
+</head>
+
+<body>
+  <div class="preload" id="preload"><span class="preload__dot"></span></div>
+
+  <div class="bg-fallback" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="progress"></div>
+
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
+  <main class="relative z-10">
+    <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
+
+      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+        <span>←</span> back home
+      </a>
+
+      <header class="mt-16 mb-12">
+        <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
+          <span>2026.06</span>
+          <span class="text-white/25 mx-2">·</span>
+          <span>5 min</span>
+        </p>
+        <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
+          Loop Engineering
+        </h1>
+        <p class="mt-6 text-white/65 text-lg leading-relaxed">
+          X 上的新敘事：別再逐句 prompt，去寫那個會替你 prompt 的 loop。但邏輯不太對 &mdash; loop 本身只是 <code>while true</code>，免費，而且會把單步錯誤指數放大。真正稀缺的不是迴圈，是讓它跑歪也賠不多的那層約束面。
+        </p>
+      </header>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <div class="prose-essay">
+        <!-- BODY START -->
+
+        <blockquote>
+          X 的 Hype：別再 prompt，去寫 loop。<br />
+          邏輯不太對。Loop 本身是 <code>while true</code>。免費、而且會把單步錯誤率指數放大。<br />
+          自主性不只是自動化，而是槓桿，風險也被放大。<br />
+          真正稀缺的是「喊停修正」的能力。<br />
+          做對的人不是寫更漂亮的 loop。是建一個「就算 loop 跑歪、也賠不多」的約束面。
+        </blockquote>
+
+        <h2>一、Loop 是什麼</h2>
+
+        <p>最近 X 上有一條敘事越來越紅：你不該再逐句 prompt coding agent，你該去設計那個會替你 prompt agent 的 loop。Addy Osmani 命名為 &ldquo;Loop Engineering&rdquo;。Boris Cherny 也說他現在不 prompt Claude 了，他寫 loop，由 loop 去 prompt Claude。</p>
+
+        <p>層級是：</p>
+
+        <pre><code>Prompt engineering   → 你送出的「字」
+Context engineering  → 模型看得到的「全部資訊」
+Harness engineering  → agent 跑的「環境」（tools / sandbox / hooks / recovery）
+Loop engineering     → 驅動 agent 朝目標跑的「迭代循環」</code></pre>
+
+        <p>loop = 一個遞迴目標。定了目標後，agent 自己接收 → 思考 → 行動 → 觀察結果 → 重複直到一個「可驗證的停止條件」成立。</p>
+
+        <h2>二、Loop 的底層邏輯</h2>
+
+        <p>底層就是 <strong>ReAct</strong>（Reason + Act）：想一步、做一步、看結果、再想。Loop engineering 只是把這個 cell 接上三件外掛：</p>
+
+        <ul>
+          <li><strong>State</strong>：記憶寫在 context 之外（跨 session 還是能用）。</li>
+          <li><strong>Verifier</strong>：另一個用於打分驗證結果的模型。</li>
+          <li><strong>Termination</strong>：step ceiling、token budget、stall detection, etc。</li>
+        </ul>
+
+        <p>所以「loop engineering 是新典範」這個敘事，底層其實是一句話：<strong>槓桿從「寫好一句 prompt」變成「設計那個會一直 prompt 的控制系統」。</strong></p>
+
+        <p>真正在賣的情緒是：What if 我們可以把「人」這個 bottleneck 從迴圈裡抽掉？</p>
+
+        <h2>三、Loop 的價值在哪裡</h2>
+
+        <p>假設每步 AI 產出是 95% 正確、跑 20 步，端到端正確率只剩 36%：</p>
+
+        <blockquote>
+          0.95<sup>20</sup> &asymp; 0.36
+        </blockquote>
+
+        <p>這是錯誤率的複利效應。模型把自己上一步的錯誤讀進 context，會更容易在下一步沿用它。Step 3 出錯了，step 4 在污染過的 context 上跑，step 5 在「污染 + step 4 新增的污染」上跑。</p>
+
+        <blockquote>
+          大眾把「自主性」當成價值來源。但是自主性本身不產生價值。
+        </blockquote>
+
+        <p><code>while true</code> 是免費的。任何人三行寫得出來。<strong>稀缺的從來不是迴圈，是迴圈裡真的有用的 termination，以及一個真的會看見錯誤的 Verifier。</strong></p>
+
+        <p>反過來：一個 loop 呼叫的是被測過、可以重複使用的 skill，那才會複利。<strong>價值在 skill 與 verifier，不在 loop。</strong></p>
+
+        <h2>四、怎麼正確的使用 Loop</h2>
+
+        <p>多數人先寫 loop 再想驗證，但我認為應該相反。</p>
+
+        <ol>
+          <li><strong>可驗證性是前提，不是功能。</strong> 寫不出 checkable 成功條件，就別 loop。確定性目標好辦（tests pass / CI green / lint clean）。模糊目標（&ldquo;build this feature&rdquo;）先寫 spec，把「done 長什麼樣」寫死。這步才是 loop engineering 真正難、也真正值錢的地方。</li>
+          <li><strong>先手動做。</strong> 你自動化不了你描述不出來的東西。挑一個你團隊常做的無聊流程，自己跑三遍，把你「沒意識到自己在做」的決策寫下來。那份筆記就是你的 skill。</li>
+          <li><strong>單 agent、單流程、單可量測結果先過。</strong> 別一開始就上五個 agent 平行。三個 70% 串起來是 34%，先證明「一個」在你真實環境穩，再展開。</li>
+          <li><strong>Verifier 和 Termination 設好。</strong> 我自己有一個 agent 專門攻擊我開發的工具，抓出自己的漏洞。</li>
+          <li><strong>Global level 的 <code>lessons.md</code>。</strong> 建立一個 global 以及 project level 的學習迴圈，把每次 debug 的內容、Claude 常犯的錯誤寫進 <code>lessons.md</code>，讓每次都持續學習、並套用之前學到的點。</li>
+        </ol>
+
+        <!-- BODY END -->
+      </div>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <footer class="flex items-center justify-between flex-wrap gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors">&larr; back home</a>
+        <p class="mono text-[10px] uppercase tracking-[0.3em] text-white/35">&copy; 2026 aiden chen</p>
+      </footer>
+
+    </article>
+  </main>
+  <script src="/js/site.js"></script>
+</body>
+</html>
