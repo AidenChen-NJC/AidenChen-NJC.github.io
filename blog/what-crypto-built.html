@@ -21,6 +21,15 @@
       }
     })();
   </script>
+  <script>
+    /* Language: localStorage.lang wins; default 'en'. Inline + synchronous
+       above tokens.css to avoid a flash of the wrong language. */
+    (function () {
+      var lang = null;
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      document.documentElement.setAttribute('data-lang', lang === 'zh' ? 'zh' : 'en');
+    })();
+  </script>
 
   <meta property="og:title" content="What Has Crypto Actually Built?" />
   <meta property="og:type" content="article" />
@@ -59,27 +68,33 @@
   <main class="relative z-10">
     <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
 
-      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
-        <span>←</span> back home
-      </a>
+      <div class="flex items-center justify-between gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+          <span>←</span> back home
+        </a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
+      </div>
 
       <header class="mt-16 mb-12">
         <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
           <span>2026.05</span>
           <span class="text-white/25 mx-2">·</span>
-          <span>6 min</span>
+          <span><span class="lang-en">6 min</span><span class="lang-zh">6 分鐘</span></span>
         </p>
         <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
-          What Has Crypto Actually Built?
+          <span class="lang-en">What Has Crypto Actually Built?</span><span class="lang-zh zh-title">加密到底建出了什麼？</span>
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          Pure DeFi failed to go mainstream &mdash; and that failure is what let crypto build something more useful. A field map of the vertical integration quietly forming between permissioned chains, public DeFi, and the agent-payment rails coming next.
+          <span class="lang-en">Pure DeFi failed to go mainstream &mdash; and that failure is what let crypto build something more useful. A field map of the vertical integration quietly forming between permissioned chains, public DeFi, and the agent-payment rails coming next.</span><span class="lang-zh">純 DeFi 沒能走進主流——而正是這個失敗，讓加密建出了更有用的東西。這是一張地圖，畫的是許可鏈、公鏈 DeFi，以及接下來要登場的 agent-payment rails 之間，正悄悄成形的垂直整合。</span>
         </p>
       </header>
 
       <hr class="border-white/[0.08] my-12" />
 
-      <div class="prose-essay">
+      <div class="prose-essay lang-en">
         <!-- BODY START -->
 
         <p>Blockchain set out to disrupt incumbent finance. Pure DeFi never became a mainstream financial service, and the reasons have been clear for a while: private key management, gas fees, overcollateralization. The friction filtered out everyone except the believers and the pros willing to live with it.</p>
@@ -143,6 +158,72 @@
         <p>Public chains aren't replacing traditional finance. They're becoming its most foundational, most open, most composable settlement layer. Pure DeFi's exit isn't a failure &mdash; it's a necessary first stage. It's what let the market build something more mature and more vertically integrated.</p>
 
         <!-- BODY END -->
+      </div>
+
+      <div class="prose-essay lang-zh">
+        <!-- BODY START (zh) -->
+
+        <p>區塊鏈一開始要顛覆的是傳統金融。純 DeFi 始終沒能變成主流的金融服務，原因其實清楚一段時間了：私鑰管理、gas 費、超額抵押。這些摩擦把所有人都濾掉了，只剩下信仰者，以及願意忍受這一切的專業玩家。</p>
+
+        <p>真正值得問的，不是 DeFi 有沒有「贏」。而是：既然純 DeFi 進不了主流，市場到底實際建出了什麼？那些 rails 接下來會走到哪？而價值最後又會沉澱在哪裡？</p>
+
+        <p class="text-white/55"><em>（一句話總結——加密這幾年到底建出了什麼有用的東西，又要往哪去？）</em></p>
+
+        <h2>現況：一個分層的市場正在走向垂直整合</h2>
+
+        <p>市場自己組織成了兩條平行的賽道。如今這條界線正在模糊，因為兩層的強項是互補的——而這正把它們往整合的方向拉。</p>
+
+        <p><strong>1. 受監管的許可層</strong> &mdash; BlackRock BUIDL、Franklin Templeton FOBXX、JPMorgan Kinexys。</p>
+
+        <p>這些產品跑在經過身分驗證的半許可鏈上，為機構客戶而建，每一筆交易都有完整的合規軌跡。</p>
+
+        <ul>
+          <li>JPMorgan Kinexys 自 2019 年上線以來，累計清算量已超過 $1.5T，目前單日交易量超過 $2B。同月，JPMorgan 推出了 MONY（My OnChain Net Yield Fund），這是它在公鏈 Ethereum 上的第一支代幣化貨幣市場基金，並與 JPMD 存款代幣搭配，形成公鏈上的雙軌佈局。</li>
+          <li>BlackRock BUIDL 自 2024 年 3 月上線以來，AUM 約 $2B（2026 年 1 月），約佔整個代幣化美國國債市場 20% 的份額，累計已派發超過 $100M 的股息。</li>
+        </ul>
+
+        <p><strong>2. 無許可的公鏈層</strong> &mdash; Aave、Uniswap、Lido 等等，持續在沒有任何機構背書的情況下結算數百億美元的資產。DeFi 的總鎖倉價值（TVL）目前約在 $92.25B（DefiLlama，2026 年 2 月 25 日）。這一層不直接服務散戶——但它正在變成機構資產負債表的後端結算與流動性來源。</p>
+
+        <h2>橋樑：RWA 成為 DeFi 的無風險抵押品</h2>
+
+        <p>受監管的 RWA 資產，正越來越被各個 DeFi 協議所接受。2025 年，BlackRock BUIDL 陸續被 Deribit、Crypto.com（6 月）與 Binance（11 月）接受為衍生品抵押品，並成為 Ethena 新穩定幣 USDtb 的主要儲備資產（超過 90%）。代幣化讓傳統金融資產獲得了鏈上的深度流動性；而 DeFi 的可組合性，反過來又賦予這些資產更高的資本效率。正是這種相互強化，讓市場不再是兩個陣營——而是一條正在垂直整合的供應鏈。</p>
+
+        <h2>RWA 代幣化比看起來複雜得多</h2>
+
+        <p>鏈上 RWA 的總價值已在 $25B 以上，其中代幣化美國國債約佔 $10B。代幣化的私募信貸增長很快，已成為主要的高收益類別。原因很直接：2025 年，美國短天期國債收益率約在 4&ndash;5%，而私募信貸收益率則達到 8&ndash;12%。</p>
+
+        <p>這裡有個值得注意的「俄羅斯娃娃」效應。Ethena 發行 USDtb，其儲備大多是 BlackRock BUIDL——而 BUIDL 的底層又是美國國債。這個結構同時在三個層次創造需求：DeFi 穩定幣需求、代幣化 RWA 需求，以及底層的國債需求。這種層層嵌套的資本效率是公鏈獨有的；傳統金融基礎設施幾乎無法複製。</p>
+
+        <p>但風險也如影隨形。在壓力之下，透過嵌套結構傳導的傳染速度，會比傳統金融的分層結算更快。</p>
+
+        <blockquote>效率的放大，和集中度的風險，永遠是同一枚硬幣的兩面。</blockquote>
+
+        <h2>一個很可能的顛覆：AI agent 的支付 rails</h2>
+
+        <p>機構基礎設施正在成熟——而這恰恰給了 AI agent 最好的切入點。</p>
+
+        <p>x402 協議是當今最具代表性的 AI 原生支付實作。它建立在 HTTP 402 狀態碼之上，讓 AI agent 能直接對 API 服務做鏈上微支付（預設 USDC），繞過傳統的訂閱制與 T+2 清算。結算時間取決於底層的鏈——在 Base 上約 2 秒，在 Solana 上約 400 毫秒。Coinbase 在 2025 年 5 月首次發布這個協議；到了 9 月，Cloudflare 與 Coinbase 宣布計劃共同創立 x402 Foundation，Cloudflare 也已把它整合進自家的 Agents SDK 與 MCP Servers，支援像 pay-per-crawl 這樣的用例。截至 2025 年 12 月，x402 已處理 75M 筆交易，總額超過 $24M。</p>
+
+        <p>當 AI agent 成為主要使用者，DeFi 協議將徹底擺脫「由人操作」的設計假設。以 UniswapX 與 CoW Protocol 為首的 intent-based 協議，已經在快速滲透 DEX 的市佔；而 AI 驅動的自動化交易，應該會把這個趨勢推得更快。</p>
+
+        <h2>價值最後會沉澱在哪？</h2>
+
+        <p>從「已被充分定價」到「尚未被定價」這條軸線去看，機會的大小恰好是反過來的。</p>
+
+        <ul>
+          <li><strong>協議層</strong>（Uniswap、Aave 等）：手續費收入有清楚的天花板。</li>
+          <li><strong>發行層</strong>（Circle 等）：有真實的利差優勢，但在監管競爭下護城河很脆弱。</li>
+          <li><strong>中間層</strong>（Fireblocks、Coinbase Prime 等）：內嵌的轉換成本構成護城河。</li>
+          <li><strong>Agent 支付基礎設施</strong>（x402 生態）：今天定價最低，卻最值得追蹤。</li>
+        </ul>
+
+        <p>價值會持續往中間件與 agent-payment rails 傾斜——尤其是目前仍被低估的 x402 生態。那才是公鏈時代真正的護城河所在。JPMorgan 把 JPMD 部署在 Coinbase 的 Base 上，把話講得很明白：當全世界最大的銀行踏上一條公鏈，它其實是在強化底層基礎設施供應商的定價權。x402 生態目前還沒有明確的贏家——Cloudflare 的切入角度，把機器人流量從「安全問題」變成「定價機會」，是更有意思、值得追蹤的商業模式假設之一。</p>
+
+        <h2>結論</h2>
+
+        <p>公鏈不是要取代傳統金融。它們正在變成傳統金融最底層、最開放、最可組合的結算層。純 DeFi 的退場不是失敗——而是一個必要的第一階段。正是它，讓市場得以建出更成熟、也更垂直整合的東西。</p>
+
+        <!-- BODY END (zh) -->
       </div>
 
       <hr class="border-white/[0.08] my-12" />

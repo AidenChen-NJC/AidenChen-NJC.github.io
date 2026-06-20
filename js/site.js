@@ -167,4 +167,18 @@
       try { sessionStorage.setItem('theme', next); } catch (e) {}
     });
   }
+
+  /* === Language switch (中文 / EN) ===
+     FOUC script in <head> resolves the language before paint (localStorage.lang,
+     default 'en'). CSS keyed on html[data-lang] does the show/hide and the
+     active-cell highlight, so a click only flips the attribute + persists it.
+     Persists in localStorage (cross-visit) since a reader's language is a
+     longer-lived preference than the tab-scoped theme. */
+  document.querySelectorAll('.lang-switch [data-lang-set]').forEach(b => {
+    b.addEventListener('click', () => {
+      const lang = b.getAttribute('data-lang-set');
+      document.documentElement.setAttribute('data-lang', lang);
+      try { localStorage.setItem('lang', lang); } catch (e) {}
+    });
+  });
 })();

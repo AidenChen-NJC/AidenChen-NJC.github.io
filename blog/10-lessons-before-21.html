@@ -21,6 +21,15 @@
       }
     })();
   </script>
+  <script>
+    /* Language: localStorage.lang wins; default 'en'. Inline + synchronous
+       above tokens.css to avoid a flash of the wrong language. */
+    (function () {
+      var lang = null;
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      document.documentElement.setAttribute('data-lang', lang === 'zh' ? 'zh' : 'en');
+    })();
+  </script>
 
   <meta property="og:title" content="10 Lessons I've Learned Before Turning 21" />
   <meta property="og:type" content="article" />
@@ -59,27 +68,33 @@
   <main class="relative z-10">
     <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
 
-      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
-        <span>←</span> back home
-      </a>
+      <div class="flex items-center justify-between gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+          <span>←</span> back home
+        </a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
+      </div>
 
       <header class="mt-16 mb-12">
         <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
           <span>2025.10</span>
           <span class="text-white/25 mx-2">·</span>
-          <span>2 min</span>
+          <span><span class="lang-en">2 min</span><span class="lang-zh">2 分鐘</span></span>
         </p>
         <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
-          10 Lessons I've Learned Before Turning 21
+          <span class="lang-en">10 Lessons I've Learned Before Turning 21</span><span class="lang-zh zh-title">21 歲前我學到的 10 件事</span>
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          Ten things I wish someone had handed me at 18. None of them are advice — patterns I only noticed after enough things broke.
+          <span class="lang-en">Ten things I wish someone had handed me at 18. None of them are advice — patterns I only noticed after enough things broke.</span><span class="lang-zh">十件我希望 18 歲時就有人遞給我的事。它們都不是什麼忠告——只是一些撞牆撞夠多次之後，我才注意到的規律。</span>
         </p>
       </header>
 
       <hr class="border-white/[0.08] my-12" />
 
-      <div class="prose-essay">
+      <div class="prose-essay lang-en">
         <!-- BODY START -->
 
         <ol>
@@ -96,6 +111,25 @@
         </ol>
 
         <!-- BODY END -->
+      </div>
+
+      <div class="prose-essay lang-zh">
+        <!-- BODY START (zh) -->
+
+        <ol>
+          <li>第一性原理 &rarr; 從「為什麼」開始，以「那又怎樣」收尾。</li>
+          <li>別再活在別人替你畫好的框框裡 &rarr; 去找到你真正的熱情。</li>
+          <li>定義你自己的成功 &rarr; 別再追別人的夢。</li>
+          <li>如果你做的不是你熱愛的事，倦怠（burnout）遲早會來。</li>
+          <li>焦慮，多半來自於沒有採取行動。</li>
+          <li>記得你當初為什麼出發。</li>
+          <li>你不需要在開始之前就把一切都想清楚 &rarr; 等你非搞懂不可的時候，你就會搞懂。</li>
+          <li>慎選你的環境 &rarr; 如果你是房間裡最聰明的人，那你進錯房間了。</li>
+          <li>沒有完美的第一份工作；人生是不斷轉向，而不是試著做出正確的決定 &mdash; 而是把你做的決定變正確。</li>
+          <li>跟著你的心走 &rarr; 直覺是真的。</li>
+        </ol>
+
+        <!-- BODY END (zh) -->
       </div>
 
       <hr class="border-white/[0.08] my-12" />

@@ -21,6 +21,15 @@
       }
     })();
   </script>
+  <script>
+    /* Language: localStorage.lang wins; default 'en'. Inline + synchronous
+       above tokens.css to avoid a flash of the wrong language. */
+    (function () {
+      var lang = null;
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      document.documentElement.setAttribute('data-lang', lang === 'zh' ? 'zh' : 'en');
+    })();
+  </script>
 
   <meta property="og:title" content="When everyone can build, knowing what to build wins" />
   <meta property="og:type" content="article" />
@@ -59,27 +68,33 @@
   <main class="relative z-10">
     <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
 
-      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
-        <span>←</span> back home
-      </a>
+      <div class="flex items-center justify-between gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+          <span>←</span> back home
+        </a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
+      </div>
 
       <header class="mt-16 mb-12">
         <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
           <span>2026.05</span>
           <span class="text-white/25 mx-2">·</span>
-          <span>2 min</span>
+          <span><span class="lang-en">2 min</span><span class="lang-zh">2 分鐘</span></span>
         </p>
         <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
-          When everyone can build, knowing what to build wins
+          <span class="lang-en">When everyone can build, knowing what to build wins</span><span class="lang-zh zh-title">當人人都能做，知道要做什麼才贏</span>
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          Watching 18-year-olds ship products in a weekend made me feel obsolete. Then I broke down where value actually comes from &mdash; and what's left when execution becomes free.
+          <span class="lang-en">Watching 18-year-olds ship products in a weekend made me feel obsolete. Then I broke down where value actually comes from &mdash; and what's left when execution becomes free.</span><span class="lang-zh">看著 18 歲的小孩一個週末就 ship 出一個產品，讓我覺得自己過時了。後來我把「價值到底從哪來」拆開來看 &mdash; 才看清當 execution 變免費之後，還剩下什麼。</span>
         </p>
       </header>
 
       <hr class="border-white/[0.08] my-12" />
 
-      <div class="prose-essay">
+      <div class="prose-essay lang-en">
         <!-- BODY START -->
 
         <p>People say we're going to be replaced by AI if we don't know how to make the most out of it.</p>
@@ -109,6 +124,38 @@
         <p class="text-white/55"><em>(I would argue that this is even more important now since the world is only getting noisier.)</em></p>
 
         <!-- BODY END -->
+      </div>
+
+      <div class="prose-essay lang-zh">
+        <!-- BODY START (zh) -->
+
+        <p>大家說，如果我們不懂得善用 AI，就會被它取代。</p>
+
+        <p>當我看到幾個隨便哪來的 18 歲高中生，一個週末就 vibe-code 出一整個產品，我覺得自己過時了。</p>
+
+        <p>來把這件事拆解一下。</p>
+
+        <div class="my-12 px-6 py-10 md:px-10 md:py-12 rounded-2xl border border-white/[0.08] bg-white/[0.025] text-center">
+          <div class="serif text-2xl md:text-[2rem] leading-[1.2]">
+            價值 = <span style="color: var(--burgundy-soft);">intent（意圖）</span> + <span style="color: var(--burgundy-soft);">logic（邏輯）</span> + <span style="color: var(--burgundy-soft);">execution（執行）</span> + <span style="color: var(--burgundy-soft);">judgement（判斷）</span>
+          </div>
+        </div>
+
+        <p>AI 把 execution 變成了大宗商品，也就是說第 3 項現在簡單太多了；只要你跟 AI 處得來，人人都應該做得出東西。</p>
+
+        <p>於是公式變成 <em>intent + logic + AI + judgement</em>，而我的恐懼，正來自我清楚知道自己在 AI 這塊正在落後。</p>
+
+        <p>但這裡有四個元素；所以說，把東西做出來只是戰鬥的一半。CS／EE 的學生要熟悉 vibe-coding，肯定比非技術背景的人容易，但你可以更擅長找出一個真正的問題、或對市場做出判斷。</p>
+
+        <p>這個世界會被平庸的產品淹沒。</p>
+
+        <blockquote>你的價值在於 curated intent（被精挑過的意圖）。</blockquote>
+
+        <p>當別人還在為「自己能做出東西」而興奮時，你會靠著清楚知道「到底該做什麼、以及為什麼它能在競爭市場裡勝出」而贏。</p>
+
+        <p class="text-white/55"><em>（我甚至會說，這在現在更重要，因為這個世界只會越來越吵。）</em></p>
+
+        <!-- BODY END (zh) -->
       </div>
 
       <hr class="border-white/[0.08] my-12" />

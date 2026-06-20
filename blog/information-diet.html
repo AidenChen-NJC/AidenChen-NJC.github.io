@@ -21,6 +21,15 @@
       }
     })();
   </script>
+  <script>
+    /* Language: localStorage.lang wins; default 'en'. Inline + synchronous
+       above tokens.css to avoid a flash of the wrong language. */
+    (function () {
+      var lang = null;
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      document.documentElement.setAttribute('data-lang', lang === 'zh' ? 'zh' : 'en');
+    })();
+  </script>
 
   <meta property="og:title" content="You need an information diet" />
   <meta property="og:type" content="article" />
@@ -59,27 +68,33 @@
   <main class="relative z-10">
     <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
 
-      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
-        <span>←</span> back home
-      </a>
+      <div class="flex items-center justify-between gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+          <span>←</span> back home
+        </a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
+      </div>
 
       <header class="mt-16 mb-12">
         <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
           <span>2026.05</span>
           <span class="text-white/25 mx-2">·</span>
-          <span>3 min</span>
+          <span><span class="lang-en">3 min</span><span class="lang-zh">3 分鐘</span></span>
         </p>
         <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
-          You need an information diet
+          <span class="lang-en">You need an information diet</span><span class="lang-zh zh-title">你需要一份資訊節食菜單</span>
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          Human focus caps at 4 hours a day. I was burning the first hour on X &mdash; so I built a pipeline that distills my chosen sources through a VC, a domain expert, and a founder, and ships at noon.
+          <span class="lang-en">Human focus caps at 4 hours a day. I was burning the first hour on X &mdash; so I built a pipeline that distills my chosen sources through a VC, a domain expert, and a founder, and ships at noon.</span><span class="lang-zh">人的專注力一天上限只有 4 小時。我卻把第一個小時燒在 X 上&mdash;&mdash;所以我做了一條 pipeline，把我自己挑的 source 經過一位 VC、一位領域專家、一位創辦人的視角蒸餾過，每天中午出刊。</span>
         </p>
       </header>
 
       <hr class="border-white/[0.08] my-12" />
 
-      <div class="prose-essay">
+      <div class="prose-essay lang-en">
         <!-- BODY START -->
 
         <p>Everyone should have their own information consumption system, just like your diet.</p>
@@ -195,6 +210,124 @@
         </ol>
 
         <!-- BODY END -->
+      </div>
+
+      <div class="prose-essay lang-zh">
+        <!-- BODY START (zh) -->
+
+        <p>每個人都該有自己的一套資訊攝取系統，就像你的飲食一樣。</p>
+
+        <p>想像一下。</p>
+
+        <ul>
+          <li>你一天只能有 6,000 個念頭。連「晚餐想吃義大利麵」都算 1 個。</li>
+          <li>你一天只有 4 小時處於巔峰狀態。一天剩下的時間，你只有巔峰時 30% 的銳利度。</li>
+        </ul>
+
+        <p>這把我搞得很煩。</p>
+
+        <p>因為這不是想像。這是真的。</p>
+
+        <p>人的專注力有上限。</p>
+
+        <ul>
+          <li>你一天大約會冒出約 6,200 個獨立的念頭。<span class="text-white/40">（Tseng &amp; Poppenk，<em>Nature Communications</em>，2020）</span></li>
+          <li>就算是頂尖好手，認知表現的巔峰一天也只有約 4 小時封頂。超過之後，報酬急速下滑。<span class="text-white/40">（Ericsson，1993）</span></li>
+          <li>專注工作 3 小時後，失誤率上升 71%、反應時間變慢約 5%。<span class="text-white/40">（Boksem et al.，2005）</span></li>
+          <li>就算每 50 分鐘休息 10 分鐘，認知效率在休息 4.5 小時後仍無法完全恢復。<span class="text-white/40">（Brazaitis &amp; Satas，2023）</span></li>
+        </ul>
+
+        <p>狄更斯。海明威。史蒂芬・金。全都一天只寫 4 小時。剩下的時間是恢復。</p>
+
+        <blockquote>
+          每天超過 4 小時基本上沒有額外效益，超過 2 小時的練習效益也遞減&hellip;真正有效的刻意練習時間，可能更接近一天 1 小時。
+          <footer class="mono text-[11px] uppercase tracking-[0.2em] mt-3" style="color: var(--prose-figcaption);">&mdash; Ericsson, Krampe &amp; Tesch-R&ouml;mer, 1993</footer>
+        </blockquote>
+
+        <hr />
+
+        <p>現在，我們來想像這個畫面。</p>
+
+        <ul>
+          <li>你醒來。先 doomscroll 滑了 10 分鐘。覺得有罪惡感。打開新聞，看看股價、Trump 又幹了什麼、Claude 昨晚又出了幾個新功能。</li>
+          <li>資訊焦慮在你耳邊低語，說你正在錯過什麼。</li>
+        </ul>
+
+        <p>這就是我，每天，已經好幾個月了&mdash;&mdash;自從 AI 無所不在、不 vibe code 就不夠酷以來。</p>
+
+        <p>做完研究後我更挫折，因為我知道自己一天只有 4 小時的巔峰專注，而我大概在早上 9 點前就把其中 1 小時燒在 X 上了。</p>
+
+        <p>所以我打造了自己的資訊來源。</p>
+
+        <hr />
+
+        <h2>痛點</h2>
+
+        <ul>
+          <li>新聞沒有「所以呢」。我讀 newsletter、X 帳號、5 個 podcast。我的收件匣是一座標題的墳場，沒有一則告訴我該拿這些資訊怎麼辦。</li>
+          <li>社群媒體充滿雜訊。</li>
+          <li>我有偏好。我只想看特定領域的特定新聞。</li>
+        </ul>
+
+        <hr />
+
+        <h2>解法</h2>
+
+        <p>每天中午 12:00，一條 pipeline 在我的 Mac 上啟動。最終成果是 GitHub Pages 上的網頁版、一個 Telegram 聊天機器人，以及一個透過 NotebookLM 生成的雙主持人中文 podcast。</p>
+
+        <hr />
+
+        <h2>各步驟在做什麼</h2>
+
+        <h3>第 1 步 &mdash; 收集（Collect）。</h3>
+        <p>一個帶有 Gmail 和 WebSearch 工具的 Claude CLI agent，從訂閱的 newsletter 和 X 拉取原始素材。它是一個聚合器，但只聚合我指定的來源，確保沒有雜訊。</p>
+
+        <h3>第 2 步 &mdash; 拷問（Interrogate）。</h3>
+        <p>Opus 並行跑三個 persona：VC、領域專家、創辦人。每一個都針對今天的素材，生出值得追問的問題。洞見就從這裡開始：我們還沒在摘要，而是在挖出一群聰明人會爭論的點。</p>
+
+        <h3>第 3 步 &mdash; 自答（Self-Answer）。</h3>
+        <p>Opus 並行跑兩批，回答每一個問題，並引用回第 1 步的來源素材。沒有來源佐證的答案會被砍掉。這一步治掉了模型動不動就講大話的習慣。</p>
+
+        <h3>第 4 步 &mdash; 起草（Draft）。</h3>
+        <p>把 Q&amp;A 重組成編輯型文章，採用三區塊結構：事實、「所以呢？」、「值得追問」。</p>
+
+        <h3>第 5 步 &mdash; 渲染（Render）。</h3>
+        <p>產出 HTML。</p>
+
+        <h3>第 6 步 &mdash; Podcast。</h3>
+        <p>NotebookLM 自動化建立一個 notebook、上傳草稿、設定一個雙主持人的中文深度對談 persona，生成音檔。</p>
+
+        <h3>第 7 步 &mdash; 發布（Publish）。</h3>
+
+        <hr />
+
+        <p>其他 newsletter 給你的是標題和摘要。這一份給你的，是一位 VC、一位領域專家、一位創辦人在讀完同樣的標題後，會邊喝咖啡邊爭論的東西。</p>
+
+        <p>這就是核心想法。</p>
+
+        <div class="my-12 px-6 py-10 md:px-10 md:py-12 rounded-2xl border border-white/[0.08] bg-white/[0.025] text-center">
+          <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 mb-4">Live edition</p>
+          <a href="https://aidenchen-njc.github.io/daily-briefing/briefings.html" class="serif text-2xl md:text-[1.75rem] leading-[1.2]" style="color: var(--burgundy-soft); border-bottom: 1px solid currentColor; padding-bottom: 2px;">
+            Check it out &rarr;
+          </a>
+        </div>
+
+        <p>真正的精華在第 2 到第 4 步&mdash;&mdash;我怎麼設計出真正的問題、和帶有洞見的真正答案，又不產生幻覺。</p>
+
+        <p>有興趣的話，歡迎找我聊。</p>
+
+        <hr />
+
+        <h2>參考文獻</h2>
+
+        <ol>
+          <li>Tseng, J., &amp; Poppenk, J. (2020). Brain meta-state transitions demarcate thoughts across task contexts exposing the mental noise of trait neuroticism. <em>Nature Communications</em>, 11, 3480. <a href="https://doi.org/10.1038/s41467-020-17255-9">https://doi.org/10.1038/s41467-020-17255-9</a></li>
+          <li>Ericsson, K. A., Krampe, R. T., &amp; Tesch-R&ouml;mer, C. (1993). The role of deliberate practice in the acquisition of expert performance. <em>Psychological Review</em>, 100(3), 363&ndash;406. <a href="https://doi.org/10.1037/0033-295X.100.3.363">https://doi.org/10.1037/0033-295X.100.3.363</a></li>
+          <li>Boksem, M. A. S., Meijman, T. F., &amp; Lorist, M. M. (2005). Effects of mental fatigue on attention: An ERP study. <em>Cognitive Brain Research</em>, 25(1), 107&ndash;116. <a href="https://doi.org/10.1016/j.cogbrainres.2005.04.011">https://doi.org/10.1016/j.cogbrainres.2005.04.011</a></li>
+          <li>Brazaitis, M., &amp; Satas, A. (2023). Regular short-duration breaks do not prevent mental fatigue and decline in cognitive efficiency in healthy young men during an office-like simulated mental working day: An EEG study. <em>International Journal of Psychophysiology</em>, 188, 33&ndash;46. <a href="https://doi.org/10.1016/j.ijpsycho.2023.03.007">https://doi.org/10.1016/j.ijpsycho.2023.03.007</a></li>
+        </ol>
+
+        <!-- BODY END (zh) -->
       </div>
 
       <hr class="border-white/[0.08] my-12" />

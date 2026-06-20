@@ -21,6 +21,15 @@
       }
     })();
   </script>
+  <script>
+    /* Language: localStorage.lang wins; default 'en'. Inline + synchronous
+       above tokens.css to avoid a flash of the wrong language. */
+    (function () {
+      var lang = null;
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      document.documentElement.setAttribute('data-lang', lang === 'zh' ? 'zh' : 'en');
+    })();
+  </script>
 
   <meta property="og:title" content="Why Stablecoins Won't Eat Visa" />
   <meta property="og:type" content="article" />
@@ -59,27 +68,33 @@
   <main class="relative z-10">
     <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
 
-      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
-        <span>←</span> back home
-      </a>
+      <div class="flex items-center justify-between gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+          <span>←</span> back home
+        </a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
+      </div>
 
       <header class="mt-16 mb-12">
         <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
           <span>2026.05</span>
           <span class="text-white/25 mx-2">·</span>
-          <span>3 min</span>
+          <span><span class="lang-en">3 min</span><span class="lang-zh">3 分鐘</span></span>
         </p>
         <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
-          Why Stablecoins Won't Eat Visa
+          <span class="lang-en">Why Stablecoins Won't Eat Visa</span><span class="lang-zh zh-title">為什麼穩定幣吃不下 Visa</span>
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          Citrini Research said stablecoins would disintermediate the card networks. Visa and Mastercard sold off on the news. The thesis is intuitive &mdash; and wrong about how payments actually work.
+          <span class="lang-en">Citrini Research said stablecoins would disintermediate the card networks. Visa and Mastercard sold off on the news. The thesis is intuitive &mdash; and wrong about how payments actually work.</span><span class="lang-zh">Citrini Research 說穩定幣會把信用卡網路給去中介化。消息一出，Visa 和 Mastercard 應聲下跌。這個論點很直覺——但它對「支付實際上是怎麼運作的」這件事，理解錯了。</span>
         </p>
       </header>
 
       <hr class="border-white/[0.08] my-12" />
 
-      <div class="prose-essay">
+      <div class="prose-essay lang-en">
         <!-- BODY START -->
 
         <p>Citrini Research published <em>The 2028 Global Intelligence Crisis</em> on Feb 22, 2026, arguing that stablecoins would disintermediate the card networks. Visa and Mastercard sold off on the news.</p>
@@ -109,6 +124,38 @@
         <blockquote>Payments will end as a UX game.</blockquote>
 
         <!-- BODY END -->
+      </div>
+
+      <div class="prose-essay lang-zh">
+        <!-- BODY START (zh) -->
+
+        <p>Citrini Research 在 2026 年 2 月 22 日發表了 <em>The 2028 Global Intelligence Crisis</em>，主張穩定幣會把信用卡網路給去中介化。消息一出，Visa 和 Mastercard 應聲下跌。</p>
+
+        <h2>他們錯了</h2>
+
+        <p>這個論點很直覺：支付鏈上擠滿了中介，區塊鏈可以把中間那層拿掉，所以加密原生的支付——理論上——應該能繞過 Visa、Mastercard 那一票人。</p>
+
+        <h2>這個論點忽略了什麼</h2>
+
+        <ul>
+          <li><strong>消費者根本感覺不到成本。</strong>手續費落在商家那一側，被算進了價格裡。沒有人會為了一個自己看不到的成本去換支付工具。</li>
+          <li><strong>Visa 和 Mastercard 直接採用就好。</strong>他們的瓶頸是監管框架，不是技術。他們已經握有用戶、UX 和信任。加密原生的軌道是從零開始。</li>
+          <li><strong>加密的 UX 還沒準備好。</strong>要設定錢包、商家也得有錢包、得手動轉帳、沒有 chargeback、沒有信用卡的各種回饋。一般消費者沒有任何理由去學這些。</li>
+        </ul>
+
+        <h2>而且這些網路早就動了</h2>
+
+        <ul>
+          <li><strong>Visa</strong>：2025 年加密信用卡的交易量成長了 525%，現在支援橫跨四條鏈的穩定幣 settlement，並在 2025 年 12 月成立了 Stablecoins Advisory Practice。</li>
+          <li><strong>Mastercard</strong>：MTN 已和 Standard Chartered、JPMorgan Kinexys 簽了合作，並加入了 Paxos 的 Global Dollar Network。</li>
+          <li><strong>Stripe</strong>：以 11 億美元收購了 Bridge，推出自家的支付鏈 Tempo，現在更讓企業能在幾天內發行自己的穩定幣。</li>
+        </ul>
+
+        <p>這不是顛覆，這是整合。區塊鏈只會殺死那些拒絕採用它的玩家。</p>
+
+        <blockquote>支付這場仗，最後會收尾在 UX 上。</blockquote>
+
+        <!-- BODY END (zh) -->
       </div>
 
       <hr class="border-white/[0.08] my-12" />

@@ -792,3 +792,51 @@ body.ready .theme-toggle { opacity: 1; visibility: visible; }
 [data-theme="light"] .bg-white\/\[0\.03\] { background-color: rgba(40,20,25,0.04); }
 [data-theme="light"] .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(40,20,25,0.04); }
 [data-theme="light"] .hover\:text-white:hover { color: var(--ink); }
+
+/* ======================================================================
+ * Bilingual (中文 / EN) — head script sets html[data-lang]; default = en.
+ * Each translatable block ships two siblings (.lang-en / .lang-zh); CSS
+ * shows one. Hiding with display:none preserves each element's natural
+ * inline/block display when shown.
+ * ====================================================================== */
+html:not([data-lang="zh"]) .lang-zh { display: none; }
+html[data-lang="zh"] .lang-en { display: none; }
+
+/* Chinese titles render in Songti (system Song/Ming serif); body font
+   unchanged. No webfont — falls back to generic serif where Songti is absent. */
+.zh-title {
+  font-family: "Songti TC", "Songti SC", "SongTi", "Noto Serif TC", serif;
+  font-style: normal;
+}
+
+/* Segmented EN / 中文 switch — glass pill, internal divider, active cell fill */
+.lang-switch {
+  display: inline-flex;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--lbtn-bg);
+  border: 1px solid var(--lbtn-border);
+  box-shadow: inset 0 1px 0 var(--lbtn-top), var(--lbtn-shadow);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  transition: var(--theme-tx);
+}
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ink-mute);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: color 200ms ease, background 200ms ease;
+}
+.lang-switch button + button { border-left: 1px solid var(--lbtn-border); }
+.lang-switch button:hover { color: var(--ink-soft); }
+html:not([data-lang="zh"]) .lang-switch [data-lang-set="en"],
+html[data-lang="zh"] .lang-switch [data-lang-set="zh"] {
+  color: var(--ink);
+  background: var(--lbtn-bg-hover);
+}

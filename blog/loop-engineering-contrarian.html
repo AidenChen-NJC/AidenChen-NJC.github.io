@@ -21,6 +21,15 @@
       }
     })();
   </script>
+  <script>
+    /* Language: localStorage.lang wins; default 'en'. Inline + synchronous
+       above tokens.css to avoid a flash of the wrong language. */
+    (function () {
+      var lang = null;
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      document.documentElement.setAttribute('data-lang', lang === 'zh' ? 'zh' : 'en');
+    })();
+  </script>
 
   <meta property="og:title" content="Loop Engineering" />
   <meta property="og:type" content="article" />
@@ -59,27 +68,33 @@
   <main class="relative z-10">
     <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
 
-      <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
-        <span>←</span> back home
-      </a>
+      <div class="flex items-center justify-between gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+          <span>←</span> back home
+        </a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
+      </div>
 
       <header class="mt-16 mb-12">
         <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
           <span>2026.06</span>
           <span class="text-white/25 mx-2">·</span>
-          <span>5 min</span>
+          <span><span class="lang-en">5 min</span><span class="lang-zh">5 分鐘</span></span>
         </p>
         <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
-          Loop Engineering
+          <span class="lang-en">Loop Engineering</span><span class="lang-zh zh-title">迴圈工程</span>
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          The new narrative on X: stop prompting line by line, write the loop that prompts for you instead. But the logic is off. A loop is just <code>while true</code>. It's free, and it compounds single-step error exponentially. What's scarce isn't the loop. It's the constraint layer that keeps a runaway loop from costing much.
+          <span class="lang-en">The new narrative on X: stop prompting line by line, write the loop that prompts for you instead. But the logic is off. A loop is just <code>while true</code>. It's free, and it compounds single-step error exponentially. What's scarce isn't the loop. It's the constraint layer that keeps a runaway loop from costing much.</span><span class="lang-zh">X 上的新敘事：別再一行一行 prompt 了，去寫一個會替你 prompt 的迴圈。但這個邏輯不太對。迴圈不過是 <code>while true</code>，它免費，而且會把單步錯誤指數級地複利放大。稀缺的從來不是迴圈，而是那層約束——讓一個失控的迴圈不會代價高昂。</span>
         </p>
       </header>
 
       <hr class="border-white/[0.08] my-12" />
 
-      <div class="prose-essay">
+      <div class="prose-essay lang-en">
         <!-- BODY START -->
 
         <blockquote>
@@ -148,6 +163,77 @@ Loop engineering     → the "iteration cycle" that drives the agent toward a go
         </ol>
 
         <!-- BODY END -->
+      </div>
+
+      <div class="prose-essay lang-zh">
+        <!-- BODY START (zh) -->
+
+        <blockquote>
+          X 上的熱潮：別再 prompt 了，去寫迴圈。<br />
+          這邏輯不太對。迴圈不過是 <code>while true</code>，免費，而且它會把你每一步的錯誤率指數級放大。<br />
+          自主不只是自動化，它是槓桿——所以它也會放大風險。<br />
+          真正稀缺的，是喊停與修正的能力。<br />
+          做對的人不是在寫更漂亮的迴圈，而是在建一個約束面：讓迴圈出錯時，代價不大。
+        </blockquote>
+
+        <h2>一、迴圈是什麼</h2>
+
+        <p>最近 X 上有個敘事越來越紅：你不該再一行一行去 prompt 你的 coding agent，而該去設計那個替你 prompt agent 的迴圈。Addy Osmani 把它命名為「Loop Engineering（迴圈工程）」。Boris Cherny 說他也不再 prompt Claude 了；他寫一個迴圈，由迴圈去 prompt Claude。</p>
+
+        <p>這個層級是這樣的：</p>
+
+        <pre><code>Prompt engineering   → 你送出的「文字」
+Context engineering  → 模型能看到的「一切」
+Harness engineering  → agent 運行的「環境」（工具 / 沙盒 / hooks / 復原）
+Loop engineering     → 驅動 agent 朝目標前進的「迭代循環」</code></pre>
+
+        <p>迴圈是一個遞迴的目標。目標一旦設定，agent 就接手：思考、行動、觀察結果、重複，直到某個「可驗證的停止條件」成立。</p>
+
+        <h2>二、底層的邏輯</h2>
+
+        <p>底層其實就是 <strong>ReAct</strong>（Reason + Act，推理＋行動）：想一步、做一步、看結果、再想。迴圈工程在這個基本單元上接了三個外掛：</p>
+
+        <ul>
+          <li><strong>狀態（State）</strong>：寫在 context 之外的記憶（跨 session 仍可用）。</li>
+          <li><strong>驗證器（Verifier）</strong>：第二個模型，替結果打分與驗證。</li>
+          <li><strong>終止條件（Termination）</strong>：步數上限、token 預算、停滯偵測等等。</li>
+        </ul>
+
+        <p>所以「迴圈工程是新典範」這套敘事，歸結成一句話：<strong>槓桿從「寫出一個好 prompt」轉移到「設計那個持續 prompt 的控制系統」。</strong></p>
+
+        <p>它真正在販賣的情緒是：如果我們能把「人」這個瓶頸，從迴圈裡抽掉呢？</p>
+
+        <h2>三、價值到底在哪</h2>
+
+        <p>假設每個 AI 步驟有 95% 正確率，而你跑 20 步。端到端的正確率會掉到 36%：</p>
+
+        <blockquote>
+          0.95<sup>20</sup> &asymp; 0.36
+        </blockquote>
+
+        <p>這就是複利型的錯誤。模型把自己上一步的錯誤讀回 context，於是越來越可能把它延續下去。第 3 步錯了，第 4 步在被污染的 context 上跑，第 5 步又在那份污染、加上第 4 步新添的錯誤之上跑。</p>
+
+        <blockquote>
+          大多數人把「自主」當成價值的來源。但自主本身什麼都產不出來。
+        </blockquote>
+
+        <p><code>while true</code> 是免費的，任何人三行就能寫出來。<strong>稀缺的從來不是迴圈，而是一個真的有用的終止條件，以及一個真的看得到錯誤的驗證器。</strong></p>
+
+        <p>反過來看：一個會呼叫「經過測試、可重用的 skill」的迴圈，才會產生複利。<strong>價值住在 skill 和驗證器裡，不在迴圈裡。</strong></p>
+
+        <h2>四、怎麼正確地用迴圈</h2>
+
+        <p>大多數人先寫迴圈，之後才想驗證的事。我認為順序剛好相反。</p>
+
+        <ol>
+          <li><strong>可驗證性是前提，不是功能。</strong>如果你寫不出一個可檢查的成功條件，就別用迴圈。確定性的目標很簡單（測試通過 / CI 綠燈 / lint 乾淨）。對模糊的目標（「把這個功能做出來」），先寫規格，把「完成」長什麼樣釘死。這正是迴圈工程真正困難、也真正有價值的地方。</li>
+          <li><strong>先用手做一遍。</strong>你無法自動化你描述不出來的東西。挑一個你團隊常跑的無聊流程，自己手動做三次，把那些你沒意識到自己在做的決定寫下來。那份筆記就是你的 skill。</li>
+          <li><strong>先讓一個 agent、一條流程、一個可量測的結果跑起來。</strong>別一開始就五個 agent 並行。三個 70% 的步驟串起來只剩 34%。在你真實的環境裡證明「一個」是穩的，再去擴張。</li>
+          <li><strong>設好驗證器與終止條件。</strong>我會養一個 agent，它整份工作就是攻擊我做的工具、把我自己的漏洞翻出來。</li>
+          <li><strong>一份全域層級的 <code>lessons.md</code>。</strong>在全域和專案兩個層級都建一個學習迴圈：把每一次 debug、每一個 Claude 反覆犯的錯都寫進 <code>lessons.md</code>，讓每一次執行都持續學習、並用上它之前學到的東西。</li>
+        </ol>
+
+        <!-- BODY END (zh) -->
       </div>
 
       <hr class="border-white/[0.08] my-12" />

@@ -23,6 +23,13 @@
       }
     })();
   </script>
+  <script>
+    /* The home page always presents in English on each load — the front door
+       is English by default regardless of a prior choice. The toggle can still
+       switch it live, and the choice still persists (localStorage) for the
+       article pages, which DO honor it. Inline + synchronous above tokens.css. */
+    document.documentElement.setAttribute('data-lang', 'en');
+  </script>
 
   <meta property="og:title" content="Aiden Chen" />
   <meta property="og:type" content="website" />
@@ -89,16 +96,20 @@
 
     <!-- =================== WRITING — Aceternity dim-siblings =================== -->
     <section id="writing" class="post-zoom mx-auto max-w-4xl px-6 md:px-8 pt-32 pb-24 md:pl-28">
-      <div class="reveal mb-8 px-1">
+      <div class="reveal mb-8 px-1 flex items-end justify-between gap-4 flex-wrap">
         <h2 class="serif text-4xl md:text-5xl">Sometimes I write what I <span class="serif-i" style="color: var(--burgundy-soft);">learn</span>.</h2>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
       </div>
 
       <div class="reveal dim-list">
         <a href="/blog/loop-engineering-contrarian.html" class="dim-row block py-4 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
           <div class="flex items-baseline justify-between gap-6">
             <div class="flex-1 min-w-0">
-              <h3 class="serif text-2xl md:text-3xl">Loop Engineering</h3>
-              <p class="mt-2 text-white/55 line-clamp-1">X says stop prompting, go write loops. But a loop is just while true. Free, and it amplifies single-step error exponentially. What's scarce is the constraint surface.</p>
+              <h3 class="serif text-2xl md:text-3xl"><span class="lang-en">Loop Engineering</span><span class="lang-zh zh-title">迴圈工程</span></h3>
+              <p class="mt-2 text-white/55 line-clamp-1"><span class="lang-en">X says stop prompting, go write loops. But a loop is just while true. Free, and it amplifies single-step error exponentially. What's scarce is the constraint surface.</span><span class="lang-zh">X 上都在說別再 prompt 了，去寫迴圈。但迴圈不過是 while true，免費，而且會把單步錯誤指數級放大。真正稀缺的是約束面。</span></p>
             </div>
             <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.06</span>
           </div>
@@ -107,8 +118,8 @@
         <a href="/blog/information-diet.html" class="dim-row block py-4 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
           <div class="flex items-baseline justify-between gap-6">
             <div class="flex-1 min-w-0">
-              <h3 class="serif text-2xl md:text-3xl">You need an information diet</h3>
-              <p class="mt-2 text-white/55 line-clamp-1">We get 4 hours of peak focus a day. Mine was getting eaten by X before 9am — so I built a pipeline that fixes it.</p>
+              <h3 class="serif text-2xl md:text-3xl"><span class="lang-en">You need an information diet</span><span class="lang-zh zh-title">你需要一份資訊節食菜單</span></h3>
+              <p class="mt-2 text-white/55 line-clamp-1"><span class="lang-en">We get 4 hours of peak focus a day. Mine was getting eaten by X before 9am — so I built a pipeline that fixes it.</span><span class="lang-zh">我們一天只有 4 小時的高峰專注力。我的在早上 9 點前就被 X 吃光了——所以我做了一條 pipeline 來解決它。</span></p>
             </div>
             <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.05</span>
           </div>
@@ -117,8 +128,8 @@
         <a href="/blog/stablecoins-wont-eat-visa.html" class="dim-row block py-4 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
           <div class="flex items-baseline justify-between gap-6">
             <div class="flex-1 min-w-0">
-              <h3 class="serif text-2xl md:text-3xl">Why Stablecoins Won't Eat Visa</h3>
-              <p class="mt-2 text-white/55 line-clamp-1">Citrini Research said stablecoins would disintermediate the card networks. Visa and Mastercard sold off on the news. The thesis is intuitive — and wrong about how payments actually work.</p>
+              <h3 class="serif text-2xl md:text-3xl"><span class="lang-en">Why Stablecoins Won't Eat Visa</span><span class="lang-zh zh-title">為什麼穩定幣吃不下 Visa</span></h3>
+              <p class="mt-2 text-white/55 line-clamp-1"><span class="lang-en">Citrini Research said stablecoins would disintermediate the card networks. Visa and Mastercard sold off on the news. The thesis is intuitive — and wrong about how payments actually work.</span><span class="lang-zh">Citrini Research 說穩定幣會把卡組織去中介化，Visa 和 Mastercard 因此遭賣壓。這個論點很直覺——但它對支付實際怎麼運作的理解是錯的。</span></p>
             </div>
             <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.05</span>
           </div>
@@ -127,8 +138,8 @@
         <a href="/blog/what-crypto-built.html" class="dim-row block py-4 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
           <div class="flex items-baseline justify-between gap-6">
             <div class="flex-1 min-w-0">
-              <h3 class="serif text-2xl md:text-3xl">What Has Crypto Actually Built?</h3>
-              <p class="mt-2 text-white/55 line-clamp-1">Pure DeFi failed to go mainstream — and that failure is what let crypto build something more useful. A field map of the vertical integration quietly forming between permissioned chains, public DeFi, and the agent-payment rails coming next.</p>
+              <h3 class="serif text-2xl md:text-3xl"><span class="lang-en">What Has Crypto Actually Built?</span><span class="lang-zh zh-title">加密到底建出了什麼？</span></h3>
+              <p class="mt-2 text-white/55 line-clamp-1"><span class="lang-en">Pure DeFi failed to go mainstream — and that failure is what let crypto build something more useful. A field map of the vertical integration quietly forming between permissioned chains, public DeFi, and the agent-payment rails coming next.</span><span class="lang-zh">純 DeFi 沒能走進主流——而正是這個失敗，讓加密建出了更有用的東西。一張正在悄悄成形的垂直整合地圖：許可鏈、公共 DeFi，以及接下來的代理支付軌道。</span></p>
             </div>
             <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.05</span>
           </div>
@@ -137,8 +148,8 @@
         <a href="/blog/curated-intent.html" class="dim-row block py-4 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
           <div class="flex items-baseline justify-between gap-6">
             <div class="flex-1 min-w-0">
-              <h3 class="serif text-2xl md:text-3xl">When everyone can build, knowing what to build wins</h3>
-              <p class="mt-2 text-white/55 line-clamp-1">Watching 18-year-olds ship products in a weekend made me feel obsolete. Then I broke down where value actually comes from — and what's left when execution becomes free.</p>
+              <h3 class="serif text-2xl md:text-3xl"><span class="lang-en">When everyone can build, knowing what to build wins</span><span class="lang-zh zh-title">當人人都能做，知道要做什麼才贏</span></h3>
+              <p class="mt-2 text-white/55 line-clamp-1"><span class="lang-en">Watching 18-year-olds ship products in a weekend made me feel obsolete. Then I broke down where value actually comes from — and what's left when execution becomes free.</span><span class="lang-zh">看著 18 歲的人一個週末就出貨產品，讓我覺得自己過時了。然後我拆解了價值到底從哪來——以及當執行變免費後，還剩下什麼。</span></p>
             </div>
             <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2026.05</span>
           </div>
@@ -147,8 +158,8 @@
         <a href="/blog/10-lessons-before-21.html" class="dim-row block py-4 px-3 rounded-2xl cursor-pointer hover:bg-white/[0.03]">
           <div class="flex items-baseline justify-between gap-6">
             <div class="flex-1 min-w-0">
-              <h3 class="serif text-2xl md:text-3xl">10 Lessons I've Learned Before Turning 21</h3>
-              <p class="mt-2 text-white/55 line-clamp-1">Ten things I wish someone had handed me at 18. None of them are advice — patterns I only noticed after enough things broke.</p>
+              <h3 class="serif text-2xl md:text-3xl"><span class="lang-en">10 Lessons I've Learned Before Turning 21</span><span class="lang-zh zh-title">21 歲前我學到的 10 件事</span></h3>
+              <p class="mt-2 text-white/55 line-clamp-1"><span class="lang-en">Ten things I wish someone had handed me at 18. None of them are advice — patterns I only noticed after enough things broke.</span><span class="lang-zh">十件我希望 18 歲時有人告訴我的事。它們都不是建議——而是夠多東西壞掉之後，我才注意到的模式。</span></p>
             </div>
             <span class="mono text-[10px] uppercase tracking-wider text-white/40 shrink-0">2025.10</span>
           </div>
