@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Context Dilution — Aiden Chen</title>
+  <meta name="theme-color" id="theme-color-meta" content="#08070A" />
+  <script>
+    /* Theme resolution: sessionStorage.theme wins; else per-page default
+       (/blog/* → light, else → dark). First visit does not write storage. */
+    (function () {
+      var stored = null;
+      try { stored = sessionStorage.getItem('theme'); } catch (e) {}
+      var theme = (stored === 'light' || stored === 'dark')
+        ? stored
+        : (/\/blog\//.test(location.pathname) ? 'light' : 'dark');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        var m = document.getElementById('theme-color-meta');
+        if (m) m.setAttribute('content', '#F0EBE3');
+      }
+    })();
+  </script>
+  <script>
+    /* Language: localStorage.lang wins; default 'en'. Inline + synchronous
+       above tokens.css to avoid a flash of the wrong language. */
+    (function () {
+      var lang = null;
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      document.documentElement.setAttribute('data-lang', lang === 'zh' ? 'zh' : 'en');
+    })();
+  </script>
+
+  <meta property="og:title" content="Context Dilution" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aidenchen-njc.github.io/blog/context-dilution.html" />
+  <meta property="article:published_time" content="2026-06-21" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><rect width=%2216%22 height=%2216%22 fill=%22%2308070A%22/><text x=%228%22 y=%2212%22 font-family=%22serif%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%239B3F4A%22>A</text></svg>" />
+</head>
+
+<body>
+  <div class="preload" id="preload"><span class="preload__dot"></span></div>
+
+  <div class="bg-fallback" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="progress"></div>
+
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
+  <main class="relative z-10">
+    <article class="mx-auto max-w-4xl px-6 md:px-10 pt-24 pb-32">
+
+      <div class="flex items-center justify-between gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors inline-flex items-center gap-2">
+          <span>←</span> back home
+        </a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-set="en">EN</button>
+          <button type="button" data-lang-set="zh">中文</button>
+        </div>
+      </div>
+
+      <header class="mt-16 mb-12">
+        <p class="mono text-[11px] uppercase tracking-[0.3em] text-white/50">
+          <span>2026.06</span>
+          <span class="text-white/25 mx-2">·</span>
+          <span><span class="lang-en">6 min</span><span class="lang-zh">6 分鐘</span></span>
+        </p>
+        <h1 class="serif text-5xl md:text-6xl mt-5 leading-[1.05] tracking-tight">
+          <span class="lang-en">Context Dilution</span><span class="lang-zh zh-title">Context Dilution</span>
+        </h1>
+        <p class="mt-6 text-white/65 text-lg leading-relaxed">
+          <span class="lang-en">A rule you agreed on at turn 1 is gone by turn 100, with no error. The popular fixes don't work: a memory vault, one agent managing another. The only thing that does is moving what matters out of the context window, where it can't dilute.</span><span class="lang-zh">你第 1 輪講好的規則，到第 100 輪就不見了，而且毫無報錯。流行的解法都沒用：接一個 memory vault、用一個 agent 管另一個 agent。唯一有用的，是把重要的搬出 context window，搬到稀釋不到的地方。</span>
+        </p>
+      </header>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <div class="prose-essay lang-en">
+        <!-- BODY START -->
+
+        <blockquote>
+          Dilution is a <em>silent</em> failure: no error, no flag. A rule you agreed on at turn 1 is gone by turn 100.<br />
+          The popular fixes don't work: a memory vault, one agent managing another. You can't out-prompt physics.<br />
+          The fix: stop asking the model to remember. Move what matters out of the window, where it can't dilute.<br />
+          Then audit it. &ldquo;The mechanism exists&rdquo; and &ldquo;the mechanism is still firing&rdquo; are different facts.
+        </blockquote>
+
+        <h2>1. What it is</h2>
+
+        <p>A few facts about LLM agents you can't engineer away. The context window fills up, so a line-one instruction fights hundreds of messages for attention by turn one hundred. There's no cross-session memory, so today's lesson is gone tomorrow. It's stochastic, so you can't bet on &ldquo;it should remember.&rdquo;</p>
+
+        <p>Together: <strong>you can't rely on an agent retaining any given rule</strong>, over a long enough session.</p>
+
+        <p>Dilution is that fact playing out slowly. You set ten rules. Twenty turns clean. Around turn one hundred, &ldquo;update the changelog after every change&rdquo; gets buried under everything after it and stops happening.</p>
+
+        <h2>2. Why it's worse than a bug</h2>
+
+        <p>A bug throws an error. A stack trace points at a line. You can fix what you can see.</p>
+
+        <p>Dilution shows you nothing. A rule you thought was running just stopped, at some moment you weren't watching. No error, no failing test, no red. The mechanism was there the whole time and stopped working.</p>
+
+        <p>And it generalizes. Every mechanism you build has <strong>three checkpoints, each able to fail silently:</strong></p>
+
+        <ol>
+          <li><strong>Designed to run:</strong> the rule exists, the logic is correct.</li>
+          <li><strong>Actually runs:</strong> wired up, registered, triggered on the right event.</li>
+          <li><strong>Actually produces a result:</strong> running, and the output is real.</li>
+        </ol>
+
+        <p>Break one and the mechanism <em>looks</em> like it's protecting you while protecting nothing. Most people only check the first: &ldquo;I wrote the rule, it's in the file.&rdquo; The failures live in 2 and 3. The question is never &ldquo;did I add the rule?&rdquo; but &ldquo;is it still firing, and is its output real?&rdquo;</p>
+
+        <p>The internet bolts something flashy on top: Obsidian to &ldquo;manage memory,&rdquo; one agent supervising another so it <em>looks</em> organized.</p>
+
+        <p>A memory vault doesn't escape dilution, it reorganizes it. The notes still have to be read back into the window to do anything, where they fight for attention like everything else. Prettier storage, same physics.</p>
+
+        <p>The subtler version: make it remember <em>harder</em>. Longer configs, angrier reminders, more prompt. Same problem, because a bigger rule is still a rule competing against everything downstream.</p>
+
+        <p>The test isn't where the text is stored, it's whether the mechanism needs the model to notice it to work. If it does, it can be diluted. The only things that can't are the ones that act outside the model's attention entirely.</p>
+
+        <h2>3. The fix: move it out</h2>
+
+        <p>Two roads. Make it remember better, which is doomed. Or <strong>admit it can't, and move what matters out</strong>: to a script that fires on every action, a file system with permissions drawn, a log that compiles itself into rules. Somewhere the window can't reach.</p>
+
+        <p>That's the core move. The rest is the same instinct at different scopes.</p>
+
+        <p>One fork. Move things out as <strong>primitives</strong> (a file system, a gate, a log) or as <strong>scaffolding</strong> (instructions written to patch what today's model can't do). The smarter the model gets, the more primitives pay off and the more scaffolding you have to tear out. Build with primitives and you don't have to redo this layer when the model improves.</p>
+
+        <h2>4. Where the rules live</h2>
+
+        <p>They need somewhere to live, and not one file. Sort by one question: <strong>would this rule survive a long conversation?</strong> If not, it sinks.</p>
+
+        <table>
+          <thead>
+            <tr><th>Layer</th><th>What lives here</th><th>Decays?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Global config</td><td>Soft preferences: style, tone</td><td>Yes, doesn't matter</td></tr>
+            <tr><td>Project config</td><td>Project map: what to read, who owns what</td><td>Yes</td></tr>
+            <tr><td>Skills (load-on-match)</td><td>Topic rules, loaded only when hit</td><td>Doesn't bloat context</td></tr>
+            <tr><td>Output style</td><td>Replaces the system prompt, re-injected mid-session</td><td><strong>Resisted, not immune</strong></td></tr>
+            <tr><td>Hooks</td><td>Hard rules, fire on every action</td><td><strong>No</strong></td></tr>
+            <tr><td>Auto-memory</td><td>Cross-session learning</td><td>Persistent</td></tr>
+          </tbody>
+        </table>
+
+        <p>If decay does no harm, it lives up top; if decay would hurt, it sinks. <strong>Hooks are bedrock:</strong> they don't live in the conversation, so no conversation is long enough to dilute them. The discipline: deterministic goes to a hook, discretionary goes to a skill. Anything that <em>must</em> happen belongs in a hook, never in a skill's best-effort matching.</p>
+
+        <h2>5. How I fight it</h2>
+
+        <p>Each defense maps to one way dilution fails you.</p>
+
+        <p><strong>Hard rules sink into hooks.</strong> A pre-write gate splits the file system into a free-write zone (drafts, notes, logs) and a canonical zone (README, the live site, anything user-facing). Reach for canonical, or try to write past a line threshold, and it stops until a recent message of mine carries an approval token. It can't be diluted, because it's not a rule in the prompt but a gate outside it, and it fires even under &ldquo;skip all permission checks.&rdquo; The judgment &ldquo;what's it allowed to do right now&rdquo; is itself state that goes missing in a long session, so I moved that out too.</p>
+
+        <p><strong>Behavior rules become a re-injected layer.</strong> The output style replaces the system prompt instead of appending, and re-injects as the conversation grows, so the rules stay near the front instead of aging into the backlog. This still lives in context, so it isn't immune, only the most resistant thing that does. Replacement and recency are what separate it from &ldquo;remember harder&rdquo;: it refreshes the rules in place rather than piling more text on top of them.</p>
+
+        <p><strong>Corrections turn into a log.</strong> When I correct it, a stop hook won't end the turn until the correction lands: what went wrong, the rule, the root cause. Each lesson carries a tag. <code>[active]</code> means I'm still enforcing it by hand; once I move it into a hook I flip it to <code>[codified]</code> and it stops loading. The point of the log isn't to store corrections, it's to convert them: every lesson is meant to become a mechanism, and once it does it no longer loads into context, so the log gets cheaper to carry the more you use it.</p>
+
+        <p><strong>Context survives compaction.</strong> Before the conversation gets summarized away, a hook dumps the plan to disk and re-reads it after, not from memory.</p>
+
+        <p>None of these are about the model. All of them are about the structure around it.</p>
+
+        <h2>6. Audit it, or it does nothing</h2>
+
+        <p>A mechanism you don't audit is indistinguishable from no mechanism. Two cases from my own system.</p>
+
+        <p>I wrote a hook to enforce self-critique and never registered it. For a week it fired zero times, dead code I'd checked off as done. Checkpoint 2 failed silently.</p>
+
+        <p>Same week: a hook scanned the transcript for &ldquo;correction signals,&rdquo; but tool output was stored as the same type as my typed messages, so it matched files it had read into itself and accused me of corrections I never made. Running, producing garbage. Checkpoint 3 failed silently.</p>
+
+        <p>Verify a mechanism is <em>wired and live</em>, not that it <em>exists</em>. &ldquo;I added the rule&rdquo; is the answer that gets you hurt.</p>
+
+        <h2>7. Build your own</h2>
+
+        <p>Inside-out, each step paying off immediately:</p>
+
+        <ol>
+          <li><strong>Learning loop first.</strong> A correction log plus a hook that won't end a turn until the correction is written. Get corrections to settle.</li>
+          <li><strong>Then the gate.</strong> Split free-write from canonical; cheap and reversible runs full speed, irreversible stops for you. This is what lets you take your hands off.</li>
+          <li><strong>Then memory.</strong> Sort rules by decay, sink the ones that must not die into hooks.</li>
+          <li><strong>Audit.</strong> Verify each mechanism fires, not that it exists.</li>
+          <li><strong>Stay lean.</strong> Ask if a layer was added for today's model and will be dead weight next version. If so, tear it out.</li>
+        </ol>
+
+        <p>The signal under the noise: the model is rented, the structure around it is yours. Stop tuning the layer being commoditized. Build the one that isn't.</p>
+
+        <!-- BODY END -->
+      </div>
+
+      <div class="prose-essay lang-zh">
+        <!-- BODY START (zh) -->
+
+        <blockquote>
+          Dilution 是一種 <em>silent</em> failure：沒有報錯、沒有警示。你第 1 輪講好的規則，到第 100 輪就不見了。<br />
+          流行的解法：接一個 memory vault、用一個 agent 管另一個 agent。但你沒辦法用 prompt 對抗物理。<br />
+          真正的解：別再要模型記住。把重要的搬出 context window，搬到稀釋不到的地方。<br />
+          然後 audit 它。「機制存在」和「機制還在跑」是兩件不同的事。
+        </blockquote>
+
+        <h2>一、它是什麼</h2>
+
+        <p>LLM agent 有幾個你改不掉的事實。context window 會被填滿，所以第一行的指令到第一百輪，得跟幾百則訊息搶注意力。它沒有跨 session 記憶，所以今天教會的明天歸零。它是 stochastic 的，所以你不能賭「它應該記得」。</p>
+
+        <p><strong>在夠長的 session 裡，你不能指望 agent 記住任何一條特定規則。</strong></p>
+
+        <p>Dilution 就是這個事實慢慢發生的樣子。你訂了十條規則，前二十輪都乾淨。到第一百輪，「每次改完更新 changelog」這條被後面的東西稀釋掉，就這麼停了。</p>
+
+        <h2>二、為什麼它比 bug 更糟</h2>
+
+        <p>bug 會 throw、會報錯，stack trace 指到某一行。看得到的東西，你修得掉。</p>
+
+        <p>Dilution 不會跟你說它正在發生，但它正在發生。一條你以為還在跑的規則，在某個你沒注意的時刻就停了。沒有報錯、沒有失敗的 test、沒有紅燈。機制一直都在，只是變成了死的。</p>
+
+        <p>而且它會 generalize。你建的每個機制都有<strong>三道會 silent 失效的關卡：</strong></p>
+
+        <ol>
+          <li><strong>設計上能跑：</strong>規則存在、邏輯正確。</li>
+          <li><strong>實際有在跑：</strong>接上線、有註冊、在對的事件被觸發。</li>
+          <li><strong>真的產生結果：</strong>在跑，而且 output 是真的。</li>
+        </ol>
+
+        <p>斷任何一道，這機制就「看起來」在保護你，其實什麼都沒保護。多數人只驗第一道：「我寫了規則，它在檔案裡」。真正的失效住在 2 和 3。該問的從來不是「我加了規則沒？」，而是「它還在 fire 嗎？它的 output 是真的嗎？」</p>
+
+        <p>網路上的反應是在上面疊個 flashy 的東西：接 Obsidian「管理記憶」、讓一個 agent 監督另一個 agent，把整件事弄得<em>看起來</em>有被 organize。</p>
+
+        <p>memory vault 沒有逃離 dilution，它只是把 dilution 重新排列。那些筆記要起作用，還是得被讀回 window 裡，在那裡跟所有東西一樣搶注意力。儲存得漂亮一點，物理不變。</p>
+
+        <p>更隱微的版本：讓它記得<em>更兇</em>。更長的 config、更兇的提醒、更多 prompt。同一個問題，因為一條更大的規則，還是一條在跟下游所有東西搶注意力的規則。</p>
+
+        <p>判準不是文字存在哪裡，而是<strong>這機制要不要靠模型注意到它才生效</strong>。要，它就會被稀釋。唯一不會的，是那些完全在模型注意力之外運作的東西。</p>
+
+        <h2>三、解法：把它搬出去</h2>
+
+        <p>兩條路。一條是讓它記得更牢，註定失敗。另一條是<strong>承認它記不住，把重要的搬出去</strong>：搬到一個每個動作都會觸發的 script、一個權限切好的檔案系統、一份會自己編譯成規則的 log。搬到 window 碰不到的地方。</p>
+
+        <p>這就是核心動作。剩下的，都是同一個直覺在不同 scope 重複。</p>
+
+        <p>有一個分岔。你可以把東西搬成 <strong>primitives</strong>（檔案系統、一道閘門、一份 log），也可以搬成 <strong>scaffolding</strong>（為了補今天模型做不到的事而寫的指令）。模型越強，primitives 越有用，scaffolding 越是下一版要拆掉的東西。搬 primitives，模型變強時你不必為了它重做這層。</p>
+
+        <h2>四、這些規則住哪</h2>
+
+        <p>搬出去的東西要有地方住，而且不是同一個檔案。用一個問題分層：<strong>這條規則撐得過一場長對話嗎？</strong> 撐不過，就沉下去。</p>
+
+        <table>
+          <thead>
+            <tr><th>層</th><th>放什麼</th><th>會衰減嗎</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>全域 config</td><td>軟偏好：風格、語氣</td><td>會，但無所謂</td></tr>
+            <tr><td>專案 config</td><td>專案地圖：讀哪些檔、誰負責什麼</td><td>會</td></tr>
+            <tr><td>Skills（命中才載入）</td><td>主題規則，命中才載入</td><td>不撐爆 context</td></tr>
+            <tr><td>Output style</td><td>取代 system prompt、中段重注入</td><td><strong>抵抗，但非免疫</strong></td></tr>
+            <tr><td>Hooks</td><td>硬規則，每個動作觸發</td><td><strong>不會</strong></td></tr>
+            <tr><td>Auto-memory</td><td>跨 session 學習</td><td>持久</td></tr>
+          </tbody>
+        </table>
+
+        <p>準則：衰減了不會出事，就放上層；會出事，就沉下去。<strong>Hooks 是地基：</strong>它不住在對話裡，所以對話再長也稀釋不到。設計鐵則：deterministic 進 hook，discretionary 進 skill。任何「一定要發生」的事屬於 hook，絕不交給 skill 的 best-effort 比對。</p>
+
+        <h2>五、我怎麼對抗它</h2>
+
+        <p>每道防線對應 dilution 的一種失效方式。</p>
+
+        <p><strong>硬規則沉進 hooks。</strong>一道寫入前的閘門把檔案系統切成自由區（草稿、筆記、log）和正式區（README、上線網站、任何 user-facing 的）。一旦它伸手去碰正式區、或想寫超過一定行數，就被擋下，直到我最近的訊息裡帶了 approval token。這稀釋不掉，因為它不是 prompt 裡的一條規則，而是 prompt 外面的一道閘門，連在「跳過所有權限確認」的模式下都照樣觸發。「它現在被允許做什麼」這個判斷本身就是會在長 session 裡遺失的 state，所以我把那個判斷也搬出去了。</p>
+
+        <p><strong>行為規則做成重注入的一層。</strong>output style 取代 system prompt 而不是附加，並隨對話變長重新注入，讓規則一直待在前面，不被擠到後面淡出。它還是住在 context 裡，所以它不免疫，只是住在 context 裡的東西當中最抗稀釋的那個。讓它和「記得更兇」分家的，是 replacement 和 recency：它把規則原地刷新，而不是在上面再疊更多文字。</p>
+
+        <p><strong>糾正編譯成一份 log。</strong>每次我糾正它，一個 stop hook 就不准這輪結束，直到糾正落了地：做錯什麼、規則是什麼、根因是什麼。每條教訓帶一個 tag。<code>[active]</code> 代表我還在人工執行；一旦我把它移進某個 hook，就翻成 <code>[codified]</code>，它從此不再載入。這份 log 的重點不是存下糾正，是把糾正轉成機制：每條教訓最後都該變成一個 hook 或 skill，變了之後就不再載入 context，所以越用越輕。</p>
+
+        <p><strong>Context 撐過 compaction。</strong>在對話被摘要掉之前，一個 hook 把計畫 dump 到 disk，事後從 disk 重讀，不靠記憶。</p>
+
+        <p>這些沒有一個是關於模型的。全都是關於模型外面的結構。</p>
+
+        <h2>六、Audit 它，否則它只是擺著好看</h2>
+
+        <p>一個你不 audit 的機制，跟沒有機制無法區分。兩個我自己系統裡的真例。</p>
+
+        <p>我寫過一個 hook 強制自我批判，卻從沒在任何 config 註冊。一整週，它觸發了零次，純粹的死碼，而我在心裡把它打勾當「做完了」。關卡 2 silent 失效。</p>
+
+        <p>同一週：一個 hook 去掃對話紀錄找「糾正信號」，但 tool output 被存成跟我打的字同一種 type，於是它一直比對自己讀進來的檔案，反過來指控我做了一堆沒發生的糾正。在跑、有 output、output 是垃圾。關卡 3 silent 失效。</p>
+
+        <p>驗一個機制有沒有<em>接上線、活著</em>，而不是它<em>存不存在</em>。「我加了規則」就是那個會害到你的答案。</p>
+
+        <h2>七、你怎麼建自己的</h2>
+
+        <p>由內而外，每一步都立刻有回報：</p>
+
+        <ol>
+          <li><strong>先建學習迴路。</strong>一份糾正 log，加一個「沒記下糾正就不准收尾」的 hook。先讓糾正會沉澱。</li>
+          <li><strong>再建閘門。</strong>切自由區和正式區；便宜、可逆的全速跑，不可逆的停下來等你。這步讓你敢放手。</li>
+          <li><strong>再做記憶工程。</strong>規則按衰減分層，該硬的沉進 hook。</li>
+          <li><strong>持續 audit。</strong>驗每個機制有沒有在 fire，而不是存不存在。</li>
+          <li><strong>保持精簡。</strong>定期問：這層是為今天的模型加的嗎？下一版會不會就變累贅？會，就拆掉。</li>
+        </ol>
+
+        <p>所有雜訊底下的訊號就一句：模型是租來的，模型外面那層結構才是你自己的。別調那個正在被商品化的層，去建那個不會的。</p>
+
+        <!-- BODY END (zh) -->
+      </div>
+
+      <hr class="border-white/[0.08] my-12" />
+
+      <footer class="flex items-center justify-between flex-wrap gap-4">
+        <a href="/" class="mono text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors">&larr; back home</a>
+        <p class="mono text-[10px] uppercase tracking-[0.3em] text-white/35">&copy; 2026 aiden chen</p>
+      </footer>
+
+    </article>
+  </main>
+  <script src="/js/site.js"></script>
+</body>
+</html>
