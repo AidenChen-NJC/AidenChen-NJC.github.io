@@ -88,7 +88,7 @@
           <span class="lang-en">Loop Engineering</span><span class="lang-zh zh-title">迴圈工程</span>
         </h1>
         <p class="mt-6 text-white/65 text-lg leading-relaxed">
-          <span class="lang-en">The new narrative on X: stop prompting line by line, write the loop that prompts for you instead. But the logic is off. A loop is just <code>while true</code>. It's free, and it compounds single-step error exponentially. What's scarce isn't the loop. It's the constraint layer that keeps a runaway loop from costing much.</span><span class="lang-zh">X 上的新敘事：別再一行一行 prompt 了，去寫一個會替你 prompt 的迴圈。但這個邏輯不太對。迴圈不過是 <code>while true</code>，它免費，而且會把單步錯誤指數級地複利放大。稀缺的從來不是迴圈，而是那層約束——讓一個失控的迴圈不會代價高昂。</span>
+          <span class="lang-en">The new narrative on X: stop prompting line by line, write the loop that prompts for you instead. But the logic is off. A loop is just <code>while true</code>. It's free, and it compounds single-step error exponentially. What's scarce isn't the loop. It's the constraint layer that keeps a runaway loop from costing much.</span><span class="lang-zh">X 上的新敘事：別再一行一行 prompt 了，去寫一個會替你 prompt 的迴圈。但這個邏輯不太對。迴圈不過是 <code>while true</code>，它免費，而且會把單步錯誤指數級地複利放大。稀缺的從來不是迴圈，而是那層約束，讓失控的迴圈不會代價高昂。</span>
         </p>
       </header>
 
@@ -158,9 +158,17 @@ Loop engineering     → the "iteration cycle" that drives the agent toward a go
           <li><strong>Verifiability is the precondition, not a feature.</strong> If you can't write a checkable success condition, don't loop. Deterministic goals are easy (tests pass / CI green / lint clean). For fuzzy goals (&ldquo;build this feature&rdquo;), write the spec first and pin down what &ldquo;done&rdquo; looks like. This is where loop engineering is genuinely hard, and genuinely valuable.</li>
           <li><strong>Do it by hand first.</strong> You can't automate what you can't describe. Pick a boring process your team runs often, do it yourself three times, and write down the decisions you didn't realize you were making. That note is your skill.</li>
           <li><strong>Get one agent, one flow, one measurable result working first.</strong> Don't start with five agents in parallel. Three 70% steps chained together is 34%. Prove that <em>one</em> is stable in your real environment before you scale out.</li>
-          <li><strong>Set up the verifier and termination.</strong> I keep an agent whose whole job is to attack the tools I build and surface my own vulnerabilities.</li>
+          <li><strong>Set up the verifier and termination.</strong> I keep an agent whose whole job is to attack the tools I build. It once found a hole I'd never have tested for myself: my approval gate scans user messages for an approval token, and one command's help text happened to contain that token verbatim, so just typing that command unlocked the gate.</li>
           <li><strong>A global-level <code>lessons.md</code>.</strong> Build a learning loop at both global and project level: write every debug session and every recurring Claude mistake into <code>lessons.md</code>, so each run keeps learning and applies what it learned before.</li>
         </ol>
+
+        <h2>5. The real scarcity: a constraint surface</h2>
+
+        <p>The math above says the loop will go wrong sometimes; you can't make 0.95<sup>20</sup> disappear. So the goal isn't to make it never err, it's to make erring cheap.</p>
+
+        <p>Cheap, reversible actions run at full speed; irreversible ones stop and wait for your nod. When the loop goes wrong, what it hits is that wall, not your production environment. The constraint surface is the scarce thing, not a prettier loop.</p>
+
+        <p>People treat autonomy as the value, but autonomy only magnifies leverage, in both directions at once. The skill that actually pays is seeing the loop go wrong, calling stop, and correcting, plus capping the downside in advance. <code>while true</code> takes three lines. The wall doesn't.</p>
 
         <!-- BODY END -->
       </div>
@@ -171,7 +179,7 @@ Loop engineering     → the "iteration cycle" that drives the agent toward a go
         <blockquote>
           X 上的熱潮：別再 prompt 了，去寫迴圈。<br />
           這邏輯不太對。迴圈不過是 <code>while true</code>，免費，而且它會把你每一步的錯誤率指數級放大。<br />
-          自主不只是自動化，它是槓桿——所以它也會放大風險。<br />
+          自主不只是自動化，它是槓桿，所以它也會放大風險。<br />
           真正稀缺的，是喊停與修正的能力。<br />
           做對的人不是在寫更漂亮的迴圈，而是在建一個約束面：讓迴圈出錯時，代價不大。
         </blockquote>
@@ -229,9 +237,17 @@ Loop engineering     → 驅動 agent 朝目標前進的「迭代循環」</code
           <li><strong>可驗證性是前提，不是功能。</strong>如果你寫不出一個可檢查的成功條件，就別用迴圈。確定性的目標很簡單（測試通過 / CI 綠燈 / lint 乾淨）。對模糊的目標（「把這個功能做出來」），先寫規格，把「完成」長什麼樣釘死。這正是迴圈工程真正困難、也真正有價值的地方。</li>
           <li><strong>先用手做一遍。</strong>你無法自動化你描述不出來的東西。挑一個你團隊常跑的無聊流程，自己手動做三次，把那些你沒意識到自己在做的決定寫下來。那份筆記就是你的 skill。</li>
           <li><strong>先讓一個 agent、一條流程、一個可量測的結果跑起來。</strong>別一開始就五個 agent 並行。三個 70% 的步驟串起來只剩 34%。在你真實的環境裡證明「一個」是穩的，再去擴張。</li>
-          <li><strong>設好驗證器與終止條件。</strong>我會養一個 agent，它整份工作就是攻擊我做的工具、把我自己的漏洞翻出來。</li>
+          <li><strong>設好驗證器與終止條件。</strong>我養了一個 agent，它整份工作就是攻擊我做的工具。它抓到過一個我自己永遠不會去測的洞：我的 approval gate 會掃使用者訊息找批准 token，而某個指令的說明文字裡剛好有那個 token 的字面值，於是光打那個指令，gate 就自己解鎖了。</li>
           <li><strong>一份全域層級的 <code>lessons.md</code>。</strong>在全域和專案兩個層級都建一個學習迴圈：把每一次 debug、每一個 Claude 反覆犯的錯都寫進 <code>lessons.md</code>，讓每一次執行都持續學習、並用上它之前學到的東西。</li>
         </ol>
+
+        <h2>五、真正的稀缺：約束面</h2>
+
+        <p>上面那個數學說迴圈一定會出錯，你消不掉 0.95<sup>20</sup>。所以重點不是讓它永遠不出錯，而是讓「出錯」變便宜。</p>
+
+        <p>便宜、可逆的動作全速跑；不可逆的動作停下來等你點頭。迴圈出錯時，它撞上的是這道牆，不是你的正式環境。稀缺的是這道約束面，不是更漂亮的迴圈。</p>
+
+        <p>大家把自主當成價值，但自主只是放大槓桿，而且兩個方向一起放大。真正值錢的能力，是看見迴圈跑歪、喊停、修正，並且事先把賠的上限框死。<code>while true</code> 三行就寫得出來，這道牆不是。</p>
 
         <!-- BODY END (zh) -->
       </div>

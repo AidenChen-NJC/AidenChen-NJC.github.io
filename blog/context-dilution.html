@@ -106,11 +106,11 @@
 
         <h2>1. What it is</h2>
 
-        <p>A few facts about LLM agents you can't engineer away. The context window fills up, so a line-one instruction fights hundreds of messages for attention by turn one hundred. There's no cross-session memory, so today's lesson is gone tomorrow. It's stochastic, so you can't bet on &ldquo;it should remember.&rdquo;</p>
+        <p>You set a rule at the start of a session. &ldquo;Update the changelog after every change.&rdquo; Twenty turns in, it's still holding. Around turn one hundred it quietly stops, buried under everything that came after, and you don't notice until you go looking.</p>
+
+        <p>That's context dilution. It follows from three facts about LLM agents you can't engineer away. The context window fills up, so a line-one instruction fights hundreds of messages for attention by turn one hundred. There's no cross-session memory, so today's lesson is gone tomorrow. It's stochastic, so you can't bet on &ldquo;it should remember.&rdquo;</p>
 
         <p>Together: <strong>you can't rely on an agent retaining any given rule</strong>, over a long enough session.</p>
-
-        <p>Dilution is that fact playing out slowly. You set ten rules. Twenty turns clean. Around turn one hundred, &ldquo;update the changelog after every change&rdquo; gets buried under everything after it and stops happening.</p>
 
         <h2>2. Why it's worse than a bug</h2>
 
@@ -168,13 +168,13 @@
 
         <p>Each defense maps to one way dilution fails you.</p>
 
-        <p><strong>Hard rules sink into hooks.</strong> A pre-write gate splits the file system into a free-write zone (drafts, notes, logs) and a canonical zone (README, the live site, anything user-facing). Reach for canonical, or try to write past a line threshold, and it stops until a recent message of mine carries an approval token. It can't be diluted, because it's not a rule in the prompt but a gate outside it, and it fires even under &ldquo;skip all permission checks.&rdquo; The judgment &ldquo;what's it allowed to do right now&rdquo; is itself state that goes missing in a long session, so I moved that out too.</p>
+        <p><strong>Hard rules sink into hooks.</strong> A pre-write gate (<code>pretool_approval_gate.py</code>) splits the file system into a free-write zone (drafts, notes, logs) and a canonical zone (README, the live site, anything user-facing). Reach for canonical, or try to write past a line threshold, and it stops until a recent message of mine carries an approval token. It can't be diluted, because it's not a rule in the prompt but a gate outside it, and it fires even under &ldquo;skip all permission checks.&rdquo; The judgment &ldquo;what's it allowed to do right now&rdquo; is itself state that goes missing in a long session, so I moved that out too.</p>
 
         <p><strong>Behavior rules become a re-injected layer.</strong> The output style replaces the system prompt instead of appending, and re-injects as the conversation grows, so the rules stay near the front instead of aging into the backlog. This still lives in context, so it isn't immune, only the most resistant thing that does. Replacement and recency are what separate it from &ldquo;remember harder&rdquo;: it refreshes the rules in place rather than piling more text on top of them.</p>
 
-        <p><strong>Corrections turn into a log.</strong> When I correct it, a stop hook won't end the turn until the correction lands: what went wrong, the rule, the root cause. Each lesson carries a tag. <code>[active]</code> means I'm still enforcing it by hand; once I move it into a hook I flip it to <code>[codified]</code> and it stops loading. The point of the log isn't to store corrections, it's to convert them: every lesson is meant to become a mechanism, and once it does it no longer loads into context, so the log gets cheaper to carry the more you use it.</p>
+        <p><strong>Corrections turn into a log.</strong> When I correct it, a stop hook (<code>stop_enforce_lessons.sh</code>) won't end the turn until the correction lands: what went wrong, the rule, the root cause. Each lesson carries a tag. <code>[active]</code> means I'm still enforcing it by hand; once I move it into a hook I flip it to <code>[codified]</code> and it stops loading. The point of the log isn't to store corrections, it's to convert them: every lesson is meant to become a mechanism, and once it does it no longer loads into context, so the log gets cheaper to carry the more you use it.</p>
 
-        <p><strong>Context survives compaction.</strong> Before the conversation gets summarized away, a hook dumps the plan to disk and re-reads it after, not from memory.</p>
+        <p><strong>Context survives compaction.</strong> Before the conversation gets summarized away, a hook (<code>precompact_dump_plan.sh</code>) dumps the plan to disk and re-reads it after, not from memory.</p>
 
         <p>None of these are about the model. All of them are about the structure around it.</p>
 
@@ -182,9 +182,9 @@
 
         <p>A mechanism you don't audit is indistinguishable from no mechanism. Two cases from my own system.</p>
 
-        <p>I wrote a hook to enforce self-critique and never registered it. For a week it fired zero times, dead code I'd checked off as done. Checkpoint 2 failed silently.</p>
+        <p>I wrote a hook to enforce self-critique (<code>interrogate_enforce.py</code>) and never registered it. For a week it fired zero times, dead code I'd checked off as done. Checkpoint 2 failed silently.</p>
 
-        <p>Same week: a hook scanned the transcript for &ldquo;correction signals,&rdquo; but tool output was stored as the same type as my typed messages, so it matched files it had read into itself and accused me of corrections I never made. Running, producing garbage. Checkpoint 3 failed silently.</p>
+        <p>Same week, the correction-log hook above scanned the transcript for &ldquo;correction signals,&rdquo; but tool output was stored as the same type as my typed messages, so it matched files it had read into itself and accused me of corrections I never made. Running, producing garbage. Checkpoint 3 failed silently.</p>
 
         <p>Verify a mechanism is <em>wired and live</em>, not that it <em>exists</em>. &ldquo;I added the rule&rdquo; is the answer that gets you hurt.</p>
 
@@ -217,11 +217,11 @@
 
         <h2>一、它是什麼</h2>
 
-        <p>LLM agent 有幾個你改不掉的事實。context window 會被填滿，所以第一行的指令到第一百輪，得跟幾百則訊息搶注意力。它沒有跨 session 記憶，所以今天教會的明天歸零。它是 stochastic 的，所以你不能賭「它應該記得」。</p>
+        <p>你在 session 開頭訂了一條規則：「每次改完更新 changelog」。前二十輪都還在。到第一百輪它悄悄停了，被後面所有東西埋掉，而你要等到回頭去找才發現。</p>
+
+        <p>這就是 context dilution，來自三個你改不掉的事實。context window 會被填滿，所以第一行的指令到第一百輪，得跟幾百則訊息搶注意力。它沒有跨 session 記憶，所以今天教會的明天歸零。它是 stochastic 的，所以你不能賭「它應該記得」。</p>
 
         <p><strong>在夠長的 session 裡，你不能指望 agent 記住任何一條特定規則。</strong></p>
-
-        <p>Dilution 就是這個事實慢慢發生的樣子。你訂了十條規則，前二十輪都乾淨。到第一百輪，「每次改完更新 changelog」這條被後面的東西稀釋掉，就這麼停了。</p>
 
         <h2>二、為什麼它比 bug 更糟</h2>
 
@@ -279,13 +279,13 @@
 
         <p>每道防線對應 dilution 的一種失效方式。</p>
 
-        <p><strong>硬規則沉進 hooks。</strong>一道寫入前的閘門把檔案系統切成自由區（草稿、筆記、log）和正式區（README、上線網站、任何 user-facing 的）。一旦它伸手去碰正式區、或想寫超過一定行數，就被擋下，直到我最近的訊息裡帶了 approval token。這稀釋不掉，因為它不是 prompt 裡的一條規則，而是 prompt 外面的一道閘門，連在「跳過所有權限確認」的模式下都照樣觸發。「它現在被允許做什麼」這個判斷本身就是會在長 session 裡遺失的 state，所以我把那個判斷也搬出去了。</p>
+        <p><strong>硬規則沉進 hooks。</strong>一道寫入前的閘門（<code>pretool_approval_gate.py</code>）把檔案系統切成自由區（草稿、筆記、log）和正式區（README、上線網站、任何 user-facing 的）。一旦它伸手去碰正式區、或想寫超過一定行數，就被擋下，直到我最近的訊息裡帶了 approval token。這稀釋不掉，因為它不是 prompt 裡的一條規則，而是 prompt 外面的一道閘門，連在「跳過所有權限確認」的模式下都照樣觸發。「它現在被允許做什麼」這個判斷本身就是會在長 session 裡遺失的 state，所以我把那個判斷也搬出去了。</p>
 
         <p><strong>行為規則做成重注入的一層。</strong>output style 取代 system prompt 而不是附加，並隨對話變長重新注入，讓規則一直待在前面，不被擠到後面淡出。它還是住在 context 裡，所以它不免疫，只是住在 context 裡的東西當中最抗稀釋的那個。讓它和「記得更兇」分家的，是 replacement 和 recency：它把規則原地刷新，而不是在上面再疊更多文字。</p>
 
-        <p><strong>糾正編譯成一份 log。</strong>每次我糾正它，一個 stop hook 就不准這輪結束，直到糾正落了地：做錯什麼、規則是什麼、根因是什麼。每條教訓帶一個 tag。<code>[active]</code> 代表我還在人工執行；一旦我把它移進某個 hook，就翻成 <code>[codified]</code>，它從此不再載入。這份 log 的重點不是存下糾正，是把糾正轉成機制：每條教訓最後都該變成一個 hook 或 skill，變了之後就不再載入 context，所以越用越輕。</p>
+        <p><strong>糾正編譯成一份 log。</strong>每次我糾正它，一個 stop hook（<code>stop_enforce_lessons.sh</code>）就不准這輪結束，直到糾正落了地：做錯什麼、規則是什麼、根因是什麼。每條教訓帶一個 tag。<code>[active]</code> 代表我還在人工執行；一旦我把它移進某個 hook，就翻成 <code>[codified]</code>，它從此不再載入。這份 log 的重點不是存下糾正，是把糾正轉成機制：每條教訓最後都該變成一個 hook 或 skill，變了之後就不再載入 context，所以越用越輕。</p>
 
-        <p><strong>Context 撐過 compaction。</strong>在對話被摘要掉之前，一個 hook 把計畫 dump 到 disk，事後從 disk 重讀，不靠記憶。</p>
+        <p><strong>Context 撐過 compaction。</strong>在對話被摘要掉之前，一個 hook（<code>precompact_dump_plan.sh</code>）把計畫 dump 到 disk，事後從 disk 重讀，不靠記憶。</p>
 
         <p>這些沒有一個是關於模型的。全都是關於模型外面的結構。</p>
 
@@ -293,9 +293,9 @@
 
         <p>一個你不 audit 的機制，跟沒有機制無法區分。兩個我自己系統裡的真例。</p>
 
-        <p>我寫過一個 hook 強制自我批判，卻從沒在任何 config 註冊。一整週，它觸發了零次，純粹的死碼，而我在心裡把它打勾當「做完了」。關卡 2 silent 失效。</p>
+        <p>我寫過一個 hook 強制自我批判（<code>interrogate_enforce.py</code>），卻從沒在任何 config 註冊。一整週，它觸發了零次，純粹的死碼，而我在心裡把它打勾當「做完了」。關卡 2 silent 失效。</p>
 
-        <p>同一週：一個 hook 去掃對話紀錄找「糾正信號」，但 tool output 被存成跟我打的字同一種 type，於是它一直比對自己讀進來的檔案，反過來指控我做了一堆沒發生的糾正。在跑、有 output、output 是垃圾。關卡 3 silent 失效。</p>
+        <p>同一週：上面那個管糾正 log 的 hook 去掃對話紀錄找「糾正信號」，但 tool output 被存成跟我打的字同一種 type，於是它一直比對自己讀進來的檔案，反過來指控我做了一堆沒發生的糾正。在跑、有 output、output 是垃圾。關卡 3 silent 失效。</p>
 
         <p>驗一個機制有沒有<em>接上線、活著</em>，而不是它<em>存不存在</em>。「我加了規則」就是那個會害到你的答案。</p>
 
