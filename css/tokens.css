@@ -774,6 +774,18 @@ body.ready .theme-toggle { opacity: 1; visibility: visible; }
   text-align: center;
   margin-top: 0.6em;
 }
+.img-placeholder {
+  border: 1.5px dashed var(--prose-hr, rgba(255,255,255,0.12));
+  border-radius: 12px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--prose-figcaption, rgba(255,255,255,0.3));
+  margin: 2em 0;
+}
 
 /* ======================================================================
  * Reduced motion
